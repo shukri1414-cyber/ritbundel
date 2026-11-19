@@ -1,0 +1,14 @@
+{
+"name": "RitBundel – bezorgritten bundelen",
+"short_name": "RitBundel",
+"description": "Bundel bezorgbestellingen per richting en nummer de bonnen voor de bezorger.",
+"start_url": "./",
+"scope": "./",
+"display": "standalone",
+"orientation": "portrait",
+"background_color": "#f4f1ea",
+"theme_color": "#1b1d1f",
+"lang": "ar",
+"dir": "rtl",
+"icons": [{ "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }]
+}
