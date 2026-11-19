@@ -1,106 +1,157 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="nl" dir="ltr">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#1b1d1f">
+<meta name="theme-color" content="#E4E8EE">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="RitBundel">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon.svg">
-<link rel="apple-touch-icon" href="icon.svg">
-<title>RitBundel – تجميع طلبات التوصيل</title>
-<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js"></script>
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
+<title>RitBundel</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;600;700&family=JetBrains+Mono:wght@700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <style>
-:root{--bg:#f4f1ea;--card:#fff;--ink:#1b1d1f;--mute:#6b6f74;--line:#e3ded3;--acc:#e8590c;--acc2:#0b7a5c;--warn:#b42318;--r:16px}
-*{box-sizing:border-box;margin:0}
-body{font-family:"IBM Plex Sans Arabic",system-ui,sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;padding-bottom:120px}
-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:var(--ink);color:#fff;position:sticky;top:0;z-index:5}
-header h1{font-size:18px;font-weight:700;letter-spacing:.2px}
-header h1 span{color:var(--acc)}
-header .hb{display:flex;gap:6px}
-.ib{background:#2c2f33;color:#fff;border:0;border-radius:10px;padding:8px 11px;font:inherit;font-size:13px;cursor:pointer}
-main{padding:14px;max-width:640px;margin:0 auto}
-.status{font-size:13px;color:var(--mute);margin:2px 2px 12px;display:flex;justify-content:space-between;gap:8px}
-.empty{background:var(--card);border:1.5px dashed var(--line);border-radius:var(--r);padding:28px 18px;text-align:center;color:var(--mute);line-height:1.8}
-.grp{background:var(--card);border-radius:var(--r);margin-bottom:14px;box-shadow:0 1px 0 var(--line),0 6px 18px -12px rgba(0,0,0,.25);overflow:hidden}
-.gh{display:flex;align-items:center;gap:12px;padding:12px 14px;border-bottom:1px solid var(--line)}
-.gl{font-family:"JetBrains Mono",monospace;font-weight:800;font-size:28px;width:52px;height:52px;border-radius:12px;display:grid;place-items:center;color:#fff;flex:none}
-.gm{flex:1;font-size:13px;color:var(--mute);line-height:1.6}
-.gm b{color:var(--ink);font-size:15px}
-.age.late{color:var(--warn);font-weight:700}
-.stop{display:flex;align-items:center;gap:12px;padding:10px 14px;border-bottom:1px solid #f1ede5}
-.stop:last-child{border-bottom:0}
-.lb{font-family:"JetBrains Mono",monospace;font-weight:800;font-size:17px;min-width:52px;text-align:center;padding:4px 6px;border-radius:8px;background:#f4f1ea;direction:ltr}
-.sa{flex:1;font-size:14px;line-height:1.45;direction:ltr;text-align:left}
-.sa small{display:block;color:var(--mute);font-size:12px}
-.x{background:none;border:0;color:var(--mute);font-size:18px;padding:4px 8px;cursor:pointer}
-.go{display:block;width:calc(100% - 28px);margin:10px 14px 14px;padding:13px;border:0;border-radius:12px;background:var(--acc2);color:#fff;font:inherit;font-weight:700;font-size:16px;cursor:pointer}
-.dock{position:fixed;bottom:0;left:0;right:0;padding:12px 14px calc(12px + env(safe-area-inset-bottom));background:linear-gradient(transparent,var(--bg) 35%);display:flex;gap:10px;max-width:640px;margin:0 auto}
-.cam{flex:1;display:flex;align-items:center;justify-content:center;gap:10px;background:var(--acc);color:#fff;border:0;border-radius:16px;padding:18px;font:inherit;font-weight:700;font-size:18px;cursor:pointer;box-shadow:0 8px 20px -8px rgba(232,89,12,.7)}
-.man{background:var(--card);color:var(--ink);border:1.5px solid var(--line);border-radius:16px;padding:0 16px;font:inherit;font-weight:600;cursor:pointer}
-.ov{position:fixed;inset:0;background:rgba(20,20,20,.55);display:none;align-items:flex-end;justify-content:center;z-index:20}
+:root{--steel:#E4E8EE;--paper:#FFFFFF;--ink:#161B26;--ink2:#5B6475;--rule:#D9DEE5;--hi:#FFD43B;--red:#C2331F;--ok:#1F8A5B}
+*{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
+html,body{background:var(--steel)}
+body{font-family:"Rubik",system-ui,sans-serif;color:var(--ink);min-height:100vh;padding:env(safe-area-inset-top) 0 calc(128px + env(safe-area-inset-bottom));-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.top{display:flex;align-items:center;gap:10px;padding:14px 18px 6px;max-width:620px;margin:0 auto}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:21px;letter-spacing:-.3px;flex:1}
+.mark{display:inline-grid;place-items:center;width:40px;height:30px;background:var(--hi);transform:skew(-8deg) rotate(-3deg);border-radius:4px 9px 5px 10px;font-weight:800;font-size:15px}
+.mark span{transform:skew(8deg) rotate(3deg)}
+.chip{display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 14px;border-radius:20px;background:var(--paper);font-weight:500;font-size:14px;box-shadow:0 1px 0 var(--rule)}
+.chip svg{width:18px;height:18px}
+.icon{width:40px;padding:0;justify-content:center}
+.status{max-width:620px;margin:0 auto;padding:4px 20px 14px;font-size:13px;color:var(--ink2);display:flex;align-items:center;gap:8px}
+.dot{width:8px;height:8px;border-radius:50%;background:#9AA3B2}
+.dot.ok{background:var(--ok)}.dot.busy{background:#E8A317;animation:pulse 1.2s infinite}.dot.bad{background:var(--red)}
+@keyframes pulse{50%{opacity:.35}}
+main{max-width:620px;margin:0 auto;padding:0 14px}
+.empty{background:var(--paper);border-radius:6px;padding:28px 22px 30px;text-align:center;position:relative}
+.empty svg{width:132px;height:auto;margin:0 auto 18px;display:block}
+.empty h2{font-size:20px;font-weight:700;margin-bottom:8px}
+.empty p{color:var(--ink2);line-height:1.6;font-size:15px;max-width:36ch;margin:0 auto}
+.slip{background:var(--paper);margin-bottom:22px;position:relative;padding-bottom:10px;filter:drop-shadow(0 1px 0 var(--rule))}
+.slip::after{content:"";position:absolute;left:0;right:0;bottom:-9px;height:10px;background:linear-gradient(-45deg,transparent 7px,var(--paper) 0) 0 0/14px 10px repeat-x,linear-gradient(45deg,transparent 7px,var(--paper) 0) 0 0/14px 10px repeat-x}
+.sh-head{display:flex;align-items:center;gap:14px;padding:16px 16px 14px;border-bottom:1.5px dashed var(--rule)}
+.swatch{display:inline-grid;place-items:center;font-weight:800;color:var(--ink);transform:skew(-8deg) rotate(-2deg);border-radius:4px 10px 5px 11px}
+.swatch>span{transform:skew(8deg) rotate(2deg);direction:ltr}
+.sw-big{width:62px;height:52px;font-size:30px;flex:none}
+.meta{flex:1;line-height:1.35}
+.meta b{display:block;font-size:17px;font-weight:700}
+.meta small{display:block;font-size:13.5px;color:var(--ink2)}
+.meta .late{color:var(--red);font-weight:500}
+.tag{font-size:12px;font-weight:500;padding:3px 9px;border-radius:12px;background:var(--steel);color:var(--ink2);flex:none}
+.stop{display:flex;align-items:center;gap:12px;padding:11px 16px}
+.stop+.stop{border-top:1px solid #EEF1F5}
+.sw-sm{min-width:54px;height:34px;padding:0 8px;font-size:17px}
+.addr{flex:1;min-width:0;direction:ltr;text-align:start;unicode-bidi:plaintext}
+.addr b{display:block;font-weight:500;font-size:15.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.addr small{font-size:13px;color:var(--ink2)}
+.x{width:36px;height:36px;border-radius:50%;color:#8A93A3;font-size:20px;flex:none}
+.x:hover{background:var(--steel)}
+.go{display:flex;align-items:center;justify-content:center;gap:10px;margin:8px 16px 6px;width:calc(100% - 32px);height:52px;border-radius:12px;background:var(--ink);color:#fff;font-weight:700;font-size:16.5px}
+.go svg{width:20px;height:20px;color:var(--hi)}
+.dock{position:fixed;left:0;right:0;bottom:0;padding:14px 14px calc(14px + env(safe-area-inset-bottom));background:linear-gradient(rgba(228,232,238,0),var(--steel) 30%)}
+.dock-in{max-width:620px;margin:0 auto;display:flex;gap:10px}
+.scan{flex:1;height:66px;border-radius:18px;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;gap:12px;font-weight:700;font-size:19px;box-shadow:0 10px 24px -12px rgba(22,27,38,.7)}
+.scan svg{width:28px;height:28px;color:var(--hi)}
+.typeb{height:66px;padding:0 16px;border-radius:18px;background:var(--paper);font-weight:500;font-size:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;box-shadow:0 1px 0 var(--rule)}
+.typeb svg{width:22px;height:22px}
+.ov{position:fixed;inset:0;background:rgba(22,27,38,.45);display:none;align-items:flex-end;justify-content:center;z-index:30}
 .ov.on{display:flex}
-.sh{background:var(--card);width:100%;max-width:640px;border-radius:22px 22px 0 0;padding:20px 18px calc(20px + env(safe-area-inset-bottom));max-height:92vh;overflow:auto}
-.sh h2{font-size:18px;margin-bottom:12px}
-.big{font-family:"JetBrains Mono",monospace;font-weight:800;font-size:76px;text-align:center;line-height:1;padding:18px 0 8px;direction:ltr}
-.hint{text-align:center;color:var(--mute);font-size:14px;margin-bottom:14px}
-.why{background:#f7f5f0;border-radius:12px;padding:10px 12px;font-size:13px;color:var(--mute);line-height:1.7;margin-bottom:14px}
-label{display:block;font-size:12px;color:var(--mute);margin:10px 0 4px}
-input,select{width:100%;padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;font:inherit;font-size:16px;background:#fff}
-.row{display:flex;gap:8px}.row>div{flex:1}
-.btns{display:flex;gap:10px;margin-top:16px}
-.b{flex:1;padding:14px;border-radius:12px;border:0;font:inherit;font-weight:700;font-size:16px;cursor:pointer}
-.bp{background:var(--ink);color:#fff}.bs{background:#efebe3;color:var(--ink)}.bw{background:#fdecea;color:var(--warn)}
-.spin{width:44px;height:44px;border:4px solid var(--line);border-top-color:var(--acc);border-radius:50%;margin:26px auto 14px;animation:s 1s linear infinite}
-@keyframes s{to{transform:rotate(360deg)}}
-.route li{display:flex;gap:12px;align-items:center;padding:9px 0;border-bottom:1px solid #f1ede5;direction:ltr}
-.route{list-style:none;padding:0;margin-bottom:12px}
-#qrbox{display:flex;justify-content:center;padding:10px;background:#fff}
-a.map{display:block;text-align:center;background:var(--acc2);color:#fff;text-decoration:none;padding:14px;border-radius:12px;font-weight:700;margin:10px 0}
-.err{color:var(--warn);font-size:14px;margin-top:8px}
-.tag{display:inline-block;font-size:11px;padding:2px 7px;border-radius:20px;background:#f4f1ea;color:var(--mute);margin-inline-start:6px}
+.sheet{background:var(--paper);width:100%;max-width:620px;border-radius:24px 24px 0 0;padding:10px 20px calc(22px + env(safe-area-inset-bottom));max-height:92vh;overflow:auto;animation:up .22s ease-out}
+@keyframes up{from{transform:translateY(40px);opacity:.4}}
+@media (prefers-reduced-motion:reduce){.sheet{animation:none}.dot.busy{animation:none}}
+.grab{width:42px;height:5px;border-radius:3px;background:var(--rule);margin:0 auto 16px}
+.sheet h2{font-size:20px;font-weight:700;margin-bottom:14px}
+.result{text-align:center;padding:6px 0 4px}
+.sw-hero{min-width:170px;height:118px;padding:0 26px;font-size:76px;margin:6px auto 18px}
+.lead{font-size:16px;line-height:1.5;margin-bottom:16px}
+.card{background:var(--steel);border-radius:12px;padding:12px 14px;font-size:14px;line-height:1.55;color:var(--ink2);text-align:start}
+.card b{color:var(--ink);font-weight:500;font-size:15.5px;display:block;direction:ltr;text-align:start;unicode-bidi:plaintext}
+.btns{display:flex;gap:10px;margin-top:18px}
+.b{flex:1;height:52px;border-radius:12px;font-weight:700;font-size:16px}
+.bp{background:var(--ink);color:#fff}.bs{background:var(--steel)}.bw{background:#FBE4DF;color:var(--red)}
+label{display:block;font-size:13px;color:var(--ink2);margin:12px 0 5px}
+input{width:100%;height:48px;padding:0 13px;border:1.5px solid var(--rule);border-radius:10px;font:inherit;font-size:16px;background:#fff;color:var(--ink)}
+input:focus{border-color:var(--ink);outline:none}
+.row{display:flex;gap:10px}.row>div{flex:1;min-width:0}
+.err{color:var(--red);font-size:14px;margin-top:10px;line-height:1.45}
+.spin{width:46px;height:46px;border:4px solid var(--steel);border-top-color:var(--ink);border-radius:50%;margin:24px auto 16px;animation:rot 1s linear infinite}
+@keyframes rot{to{transform:rotate(360deg)}}
+.hint{text-align:center;color:var(--ink2);font-size:15px;line-height:1.5}
+.route{list-style:none;padding:0;margin:0 0 14px}
+.route li{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #EEF1F5}
+a.map{display:flex;align-items:center;justify-content:center;gap:10px;height:54px;border-radius:12px;background:var(--hi);color:var(--ink);text-decoration:none;font-weight:700;font-size:16px}
+#qrbox{display:flex;justify-content:center;padding:14px;margin-top:6px}
+.langs{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.lang{height:52px;border-radius:12px;background:var(--steel);font-weight:500;font-size:16px}
+.lang.on{background:var(--ink);color:#fff}
+.small{font-size:13px;color:var(--ink2);line-height:1.55;margin-top:14px}
 </style>
 </head>
 <body>
-<header><h1>Rit<span>Bundel</span></h1><div class="hb"><button class="ib" id="demoBtn">تجربة</button><button class="ib" id="setBtn">الإعدادات</button></div></header>
-<main>
-<div class="status"><span id="st1"></span><span id="st2"></span></div>
-<div id="groups"></div>
-</main>
-<div class="dock">
-<button class="cam" id="camBtn"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h3l2-3h6l2 3h3v13H4z"/><circle cx="12" cy="13" r="4"/></svg>صوّر ورقة الطلب</button>
-<button class="man" id="manBtn">يدوي</button>
-</div>
+<header class="top">
+<div class="brand"><span class="mark"><span>B2</span></span>RitBundel</div>
+<button class="chip" id="langBtn" aria-label="Language"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/></svg><span id="langCode">NL</span></button>
+<button class="chip icon" id="setBtn" aria-label="Settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg></button>
+</header>
+<div class="status"><span class="dot" id="dot"></span><span id="st2"></span><span style="flex:1"></span><button id="demoBtn" style="font-size:13px;color:var(--ink2);text-decoration:underline;text-underline-offset:3px"></button></div>
+<main id="groups"></main>
+<div class="dock"><div class="dock-in">
+<button class="scan" id="camBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8V5h3M21 8V5h-3M3 16v3h3M21 16v3h-3"/><rect x="7" y="7" width="10" height="10" rx="1.5"/></svg><span id="scanTxt"></span></button>
+<button class="typeb" id="manBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M7 10h.01M11 10h.01M15 10h.01M8 14h8"/></svg><span id="typeTxt"></span></button>
+</div></div>
 <input type="file" id="file" accept="image/*" capture="environment" hidden>
-
-<div class="ov" id="ov"><div class="sh" id="sh"></div></div>
-
+<div class="ov" id="ov"><div class="sheet" id="sh"></div></div>
 <script>
+const I18N={
+nl:{name:"Nederlands",scan:"Bon scannen",type:"Adres typen",demo:"Demo",settings:"Instellingen",language:"Taal",ready:"Lezer klaar",loading:"Lezer laden…",rerr:"Lezer niet beschikbaar, typ het adres",offline:"Geen internet",emptyTitle:"Nog geen bestellingen",emptyBody:"Scan een bon. Je krijgt een code zoals B2 om op de bon te schrijven. De bezorger pakt zijn stapel en volgt de nummers.",orders:"{n} bestellingen",order1:"1 bestelling",trip:"rit ± {m} min",open:"{m} min open",late:"nu versturen",full:"vol",start:"Start bezorging",writeOn:"Schrijf dit op de bon en leg hem op stapel {L}",newGroup:"Nieuwe stapel: geen open stapel gaat deze kant op.",added:"Op stapel {L}, rit {m} min langer",precExact:"Locatie: exact adres",precStreet:"Locatie: straat",precArea:"Locatie: postcodegebied",check:"Controleer of het adres klopt met de bon.",undo:"Ongedaan",edit:"Adres wijzigen",done:"Klaar",next:"Volgende ({i}/6)",reading:"Bon lezen…",locating:"Locatie zoeken…",noRead:"Postcode niet gelezen. Fotografeer de bon dichterbij met goed licht, of typ het adres.",notFound:"Adres niet gevonden. Controleer de postcode.",noNet:"Geen internetverbinding.",enterAddr:"Adres invoeren",street:"Straat",nr:"Nr.",postcode:"Postcode",city:"Plaats",ref:"Bestelcode",time:"Tijd",add:"Bestelling toevoegen",cancel:"Annuleren",needPc:"Vul minstens de postcode in.",route:"Stapel {L}: volgorde",openMaps:"Route openen in Google Maps",scanQR:"Of de bezorger scant deze code met zijn camera:",houseNr:"Het huisnummer staat in de QR op elke bon. De bezorger scant die bij de deur.",back:"Terug",gone:"Bezorger vertrokken",delTitle:"Bestelling {c} verwijderen?",remove:"Verwijderen",restName:"Naam restaurant",restAddr:"Adres restaurant",restHint:"De locatie wordt bijgewerkt als je het adres wijzigt.",restErr:"Adres niet gevonden. Schrijf het zo: Kerkstraat 24A, 4041 XB Kesteren",maxN:"Max. bestellingen per rit",maxAge:"Max. leeftijd stapel (min)",maxDet:"Max. extra rijtijd (min)",speed:"Gem. snelheid (km/u)",privacy:"Er wordt geen adres of bestelling bewaard; alles verdwijnt als je de app sluit. De bon wordt op de telefoon zelf gelezen, de foto gaat nergens heen. Alleen postcode en straat gaan naar PDOK (de officiële adresservice van Nederland) om de locatie te vinden.",clear:"Alle bestellingen wissen",save:"Opslaan",demoTitle:"Demo met 6 bonnen",demoBody:"Voegt 6 voorbeeldbestellingen een voor een toe, alsof ze gescand zijn.",demoStart:"Eerste bestelling",min:"min"},
+en:{name:"English",scan:"Scan slip",type:"Type address",demo:"Demo",settings:"Settings",language:"Language",ready:"Reader ready",loading:"Loading reader…",rerr:"Reader unavailable, type the address",offline:"No internet",emptyTitle:"No orders yet",emptyBody:"Scan a slip. You get a code like B2 to write on it. The driver takes his pile and follows the numbers.",orders:"{n} orders",order1:"1 order",trip:"trip ± {m} min",open:"open {m} min",late:"send now",full:"full",start:"Start delivery",writeOn:"Write this on the slip and put it on pile {L}",newGroup:"New pile: no open pile goes this way.",added:"Added to pile {L}, trip {m} min longer",precExact:"Location: exact address",precStreet:"Location: street",precArea:"Location: postcode area",check:"Check that the address matches the slip.",undo:"Undo",edit:"Edit address",done:"Done",next:"Next ({i}/6)",reading:"Reading the slip…",locating:"Finding the location…",noRead:"Couldn't read the postcode. Take the photo closer in good light, or type the address.",notFound:"Address not found. Check the postcode.",noNet:"No internet connection.",enterAddr:"Enter address",street:"Street",nr:"No.",postcode:"Postcode",city:"City",ref:"Order code",time:"Time",add:"Add order",cancel:"Cancel",needPc:"Enter at least the postcode.",route:"Pile {L}: delivery order",openMaps:"Open route in Google Maps",scanQR:"Or the driver scans this code with his camera:",houseNr:"The house number is in the QR on each slip. The driver scans it at the door.",back:"Back",gone:"Driver has left",delTitle:"Remove order {c}?",remove:"Remove",restName:"Restaurant name",restAddr:"Restaurant address",restHint:"The location updates when you change the address.",restErr:"Address not found. Write it like: Kerkstraat 24A, 4041 XB Kesteren",maxN:"Max orders per trip",maxAge:"Max pile age (min)",maxDet:"Max extra driving (min)",speed:"Average speed (km/h)",privacy:"No address or order is stored; everything is gone when you close the app. The slip is read on the phone itself and the photo goes nowhere. Only postcode and street are sent to PDOK (the official Dutch address service) to find the location.",clear:"Clear all orders",save:"Save",demoTitle:"Demo with 6 slips",demoBody:"Adds 6 sample orders one by one, as if scanned.",demoStart:"First order",min:"min"},
+ar:{name:"العربية",scan:"صوّر ورقة الطلب",type:"اكتب العنوان",demo:"تجربة",settings:"الإعدادات",language:"اللغة",ready:"القراءة جاهزة",loading:"تجهيز القراءة…",rerr:"القراءة غير متاحة، اكتب العنوان",offline:"لا يوجد إنترنت",emptyTitle:"لا توجد طلبات بعد",emptyBody:"صوّر ورقة الطلب، فيعطيك التطبيق رمزاً مثل B2 تكتبه عليها. السائق يأخذ كومته ويتبع الأرقام.",orders:"{n} طلبات",order1:"طلب واحد",trip:"الرحلة ± {m} د",open:"مفتوحة منذ {m} د",late:"أرسلها الآن",full:"ممتلئة",start:"ابدأ التوصيل",writeOn:"اكتب هذا على الورقة وضعها في كومة {L}",newGroup:"كومة جديدة: لا توجد كومة مفتوحة في هذا الاتجاه.",added:"أُضيف إلى كومة {L}، الرحلة أطول بـ {m} د",precExact:"الموقع: العنوان بالضبط",precStreet:"الموقع: الشارع",precArea:"الموقع: منطقة الرمز البريدي",check:"تأكد أن العنوان مطابق للورقة.",undo:"تراجع",edit:"تعديل العنوان",done:"تم",next:"التالي ({i}/6)",reading:"أقرأ الورقة…",locating:"أحدد الموقع…",noRead:"لم أستطع قراءة الرمز البريدي. صوّر الورقة أقرب وبإضاءة جيدة، أو اكتب العنوان.",notFound:"لم أجد العنوان. تأكد من الرمز البريدي.",noNet:"لا يوجد اتصال بالإنترنت.",enterAddr:"إدخال العنوان",street:"الشارع",nr:"رقم",postcode:"الرمز البريدي",city:"المدينة",ref:"رقم الطلب",time:"الوقت",add:"أضف الطلب",cancel:"إلغاء",needPc:"اكتب الرمز البريدي على الأقل.",route:"كومة {L}: ترتيب التوصيل",openMaps:"افتح الطريق في Google Maps",scanQR:"أو يمسح السائق هذا الرمز بكاميرا جواله:",houseNr:"رقم البيت موجود في QR كل ورقة، والسائق يمسحه عند الباب.",back:"رجوع",gone:"انطلق السائق",delTitle:"حذف الطلب {c}؟",remove:"حذف",restName:"اسم المطعم",restAddr:"عنوان المطعم",restHint:"يتحدث الموقع تلقائياً عند تغيير العنوان.",restErr:"لم أجد العنوان. اكتبه هكذا: Kerkstraat 24A, 4041 XB Kesteren",maxN:"أقصى عدد طلبات في الرحلة",maxAge:"أقصى عمر للكومة (دقيقة)",maxDet:"أقصى زيادة في الطريق (دقيقة)",speed:"متوسط السرعة (كم/س)",privacy:"لا يُحفظ أي عنوان أو طلب، وكل شيء يُمسح عند إغلاق التطبيق. الورقة تُقرأ داخل الجوال، والصورة لا تُرسل لأي مكان. يُرسل فقط الرمز البريدي والشارع إلى PDOK، خدمة العناوين الهولندية الرسمية، لتحديد الموقع.",clear:"مسح كل الطلبات",save:"حفظ",demoTitle:"تجربة بست أوراق",demoBody:"يضيف 6 طلبات تجريبية واحداً واحداً، كأنها صُوّرت.",demoStart:"الطلب الأول",min:"د"},
+tr:{name:"Türkçe",scan:"Fiş tara",type:"Adres yaz",demo:"Deneme",settings:"Ayarlar",language:"Dil",ready:"Okuyucu hazır",loading:"Okuyucu yükleniyor…",rerr:"Okuyucu yok, adresi yaz",offline:"İnternet yok",emptyTitle:"Henüz sipariş yok",emptyBody:"Bir fiş tara. Fişin üstüne yazman için B2 gibi bir kod alırsın. Kurye kendi destesini alır ve numaraları takip eder.",orders:"{n} sipariş",order1:"1 sipariş",trip:"tur ± {m} dk",open:"{m} dk açık",late:"şimdi gönder",full:"dolu",start:"Teslimatı başlat",writeOn:"Bunu fişe yaz ve {L} destesine koy",newGroup:"Yeni deste: bu yöne giden açık deste yok.",added:"{L} destesine eklendi, tur {m} dk uzadı",precExact:"Konum: tam adres",precStreet:"Konum: sokak",precArea:"Konum: posta kodu bölgesi",check:"Adresin fişle aynı olduğunu kontrol et.",undo:"Geri al",edit:"Adresi düzenle",done:"Tamam",next:"Sonraki ({i}/6)",reading:"Fiş okunuyor…",locating:"Konum bulunuyor…",noRead:"Posta kodu okunamadı. Fişi daha yakından ve iyi ışıkta çek ya da adresi yaz.",notFound:"Adres bulunamadı. Posta kodunu kontrol et.",noNet:"İnternet bağlantısı yok.",enterAddr:"Adres gir",street:"Sokak",nr:"No.",postcode:"Posta kodu",city:"Şehir",ref:"Sipariş kodu",time:"Saat",add:"Sipariş ekle",cancel:"İptal",needPc:"En az posta kodunu gir.",route:"{L} destesi: teslimat sırası",openMaps:"Rotayı Google Maps'te aç",scanQR:"Ya da kurye bu kodu kamerasıyla tarar:",houseNr:"Ev numarası her fişteki QR'da. Kurye kapıda tarar.",back:"Geri",gone:"Kurye çıktı",delTitle:"{c} siparişi silinsin mi?",remove:"Sil",restName:"Restoran adı",restAddr:"Restoran adresi",restHint:"Adresi değiştirince konum güncellenir.",restErr:"Adres bulunamadı. Şöyle yaz: Kerkstraat 24A, 4041 XB Kesteren",maxN:"Turda en fazla sipariş",maxAge:"Destenin en fazla yaşı (dk)",maxDet:"En fazla ek yol (dk)",speed:"Ortalama hız (km/s)",privacy:"Hiçbir adres veya sipariş saklanmaz; uygulamayı kapatınca her şey silinir. Fiş telefonun içinde okunur, fotoğraf hiçbir yere gitmez. Konum için yalnızca posta kodu ve sokak PDOK'a (Hollanda'nın resmi adres servisi) gönderilir.",clear:"Tüm siparişleri sil",save:"Kaydet",demoTitle:"6 fişle deneme",demoBody:"Taranmış gibi 6 örnek siparişi tek tek ekler.",demoStart:"İlk sipariş",min:"dk"},
+ku:{name:"Kurdî",scan:"Fîşê bişopîne",type:"Navnîşanê binivîse",demo:"Ceribandin",settings:"Mîheng",language:"Ziman",ready:"Xwendin amade ye",loading:"Xwendin tê amadekirin…",rerr:"Xwendin tune ye, navnîşanê binivîse",offline:"Înternet tune",emptyTitle:"Hîn ferman tune ne",emptyBody:"Fîşekê bişopîne. Tu kodekî wek B2 distînî ku li ser binivîsî. Ajokar komika xwe digire û li pey hejmaran diçe.",orders:"{n} ferman",order1:"1 ferman",trip:"rêwîtî ± {m} xul",open:"{m} xul vekirî",late:"niha bişîne",full:"tije",start:"Gihandinê dest pê bike",writeOn:"Vê li ser fîşê binivîse û deyne ser komika {L}",newGroup:"Komika nû: ti komika vekirî vî alî ve naçe.",added:"Li komika {L} hat zêdekirin, rê {m} xul dirêjtir",precExact:"Cih: navnîşana rast",precStreet:"Cih: kolan",precArea:"Cih: herêma koda postê",check:"Kontrol bike ku navnîşan wek fîşê ye.",undo:"Paşve",edit:"Navnîşanê biguherîne",done:"Temam",next:"Pêşve ({i}/6)",reading:"Fîş tê xwendin…",locating:"Cih tê dîtin…",noRead:"Koda postê nehat xwendin. Wêneyê nêzîktir û di ronahiya baş de bikişîne, an navnîşanê binivîse.",notFound:"Navnîşan nehat dîtin. Koda postê kontrol bike.",noNet:"Girêdana înternetê tune.",enterAddr:"Navnîşanê binivîse",street:"Kolan",nr:"Hej.",postcode:"Koda postê",city:"Bajar",ref:"Koda fermanê",time:"Dem",add:"Fermanê zêde bike",cancel:"Betal",needPc:"Herî kêm koda postê binivîse.",route:"Komika {L}: rêza gihandinê",openMaps:"Rê di Google Maps de veke",scanQR:"An ajokar vî kodî bi kameraya xwe dişopîne:",houseNr:"Hejmara malê di QR ya her fîşê de ye. Ajokar li ber derî dişopîne.",back:"Paşve",gone:"Ajokar çû",delTitle:"Fermana {c} jê bibe?",remove:"Jê bibe",restName:"Navê xwaringehê",restAddr:"Navnîşana xwaringehê",restHint:"Dema navnîşan biguhere, cih nû dibe.",restErr:"Navnîşan nehat dîtin. Wiha binivîse: Kerkstraat 24A, 4041 XB Kesteren",maxN:"Herî zêde ferman di rêwîtiyê de",maxAge:"Herî zêde temenê komikê (xul)",maxDet:"Herî zêde rêya zêde (xul)",speed:"Leza navîn (km/s)",privacy:"Ti navnîşan an ferman nayê tomarkirin; dema tu sepanê digirî her tişt diçe. Fîş di nav telefonê de tê xwendin, wêne naçe ti derê. Tenê koda postê û kolan ji bo dîtina cih diçin PDOK (servîsa fermî ya navnîşanên Holendayê).",clear:"Hemû fermanan paqij bike",save:"Tomar bike",demoTitle:"Ceribandin bi 6 fîşan",demoBody:"6 fermanên mînak yek bi yek zêde dike, wek ku hatibin şopandin.",demoStart:"Fermana yekem",min:"xul"},
+de:{name:"Deutsch",scan:"Bon scannen",type:"Adresse eingeben",demo:"Demo",settings:"Einstellungen",language:"Sprache",ready:"Leser bereit",loading:"Leser lädt…",rerr:"Leser nicht verfügbar, Adresse eingeben",offline:"Kein Internet",emptyTitle:"Noch keine Bestellungen",emptyBody:"Scanne einen Bon. Du bekommst einen Code wie B2, den du draufschreibst. Der Fahrer nimmt seinen Stapel und folgt den Nummern.",orders:"{n} Bestellungen",order1:"1 Bestellung",trip:"Tour ± {m} Min",open:"seit {m} Min offen",late:"jetzt losschicken",full:"voll",start:"Lieferung starten",writeOn:"Schreib das auf den Bon und leg ihn auf Stapel {L}",newGroup:"Neuer Stapel: kein offener Stapel fährt in diese Richtung.",added:"Auf Stapel {L}, Tour {m} Min länger",precExact:"Ort: genaue Adresse",precStreet:"Ort: Straße",precArea:"Ort: Postleitzahlgebiet",check:"Prüfe, ob die Adresse zum Bon passt.",undo:"Rückgängig",edit:"Adresse ändern",done:"Fertig",next:"Weiter ({i}/6)",reading:"Bon wird gelesen…",locating:"Ort wird gesucht…",noRead:"Postleitzahl nicht gelesen. Fotografiere den Bon näher bei gutem Licht oder gib die Adresse ein.",notFound:"Adresse nicht gefunden. Prüfe die Postleitzahl.",noNet:"Keine Internetverbindung.",enterAddr:"Adresse eingeben",street:"Straße",nr:"Nr.",postcode:"PLZ",city:"Ort",ref:"Bestellcode",time:"Zeit",add:"Bestellung hinzufügen",cancel:"Abbrechen",needPc:"Gib mindestens die PLZ ein.",route:"Stapel {L}: Reihenfolge",openMaps:"Route in Google Maps öffnen",scanQR:"Oder der Fahrer scannt diesen Code mit seiner Kamera:",houseNr:"Die Hausnummer steht im QR auf jedem Bon. Der Fahrer scannt ihn an der Tür.",back:"Zurück",gone:"Fahrer ist los",delTitle:"Bestellung {c} entfernen?",remove:"Entfernen",restName:"Name des Restaurants",restAddr:"Adresse des Restaurants",restHint:"Der Ort wird aktualisiert, wenn du die Adresse änderst.",restErr:"Adresse nicht gefunden. Schreib sie so: Kerkstraat 24A, 4041 XB Kesteren",maxN:"Max. Bestellungen pro Tour",maxAge:"Max. Alter des Stapels (Min)",maxDet:"Max. Umweg (Min)",speed:"Ø Geschwindigkeit (km/h)",privacy:"Es wird keine Adresse und keine Bestellung gespeichert; alles ist weg, wenn du die App schließt. Der Bon wird auf dem Handy selbst gelesen, das Foto geht nirgendwohin. Nur PLZ und Straße gehen an PDOK (den offiziellen Adressdienst der Niederlande), um den Ort zu finden.",clear:"Alle Bestellungen löschen",save:"Speichern",demoTitle:"Demo mit 6 Bons",demoBody:"Fügt 6 Beispielbestellungen nacheinander hinzu, als wären sie gescannt.",demoStart:"Erste Bestellung",min:"Min"},
+pl:{name:"Polski",scan:"Skanuj paragon",type:"Wpisz adres",demo:"Demo",settings:"Ustawienia",language:"Język",ready:"Czytnik gotowy",loading:"Ładowanie czytnika…",rerr:"Czytnik niedostępny, wpisz adres",offline:"Brak internetu",emptyTitle:"Brak zamówień",emptyBody:"Zeskanuj paragon. Dostaniesz kod, np. B2, do napisania na nim. Kierowca bierze swój stos i jedzie według numerów.",orders:"{n} zamówień",order1:"1 zamówienie",trip:"kurs ± {m} min",open:"otwarty {m} min",late:"wyślij teraz",full:"pełny",start:"Rozpocznij dostawę",writeOn:"Napisz to na paragonie i połóż na stosie {L}",newGroup:"Nowy stos: żaden otwarty stos nie jedzie w tę stronę.",added:"Dodano do stosu {L}, kurs dłuższy o {m} min",precExact:"Lokalizacja: dokładny adres",precStreet:"Lokalizacja: ulica",precArea:"Lokalizacja: obszar kodu pocztowego",check:"Sprawdź, czy adres zgadza się z paragonem.",undo:"Cofnij",edit:"Zmień adres",done:"Gotowe",next:"Dalej ({i}/6)",reading:"Czytam paragon…",locating:"Szukam lokalizacji…",noRead:"Nie odczytano kodu pocztowego. Zrób zdjęcie bliżej w dobrym świetle albo wpisz adres.",notFound:"Nie znaleziono adresu. Sprawdź kod pocztowy.",noNet:"Brak połączenia z internetem.",enterAddr:"Wpisz adres",street:"Ulica",nr:"Nr",postcode:"Kod pocztowy",city:"Miasto",ref:"Kod zamówienia",time:"Godzina",add:"Dodaj zamówienie",cancel:"Anuluj",needPc:"Wpisz przynajmniej kod pocztowy.",route:"Stos {L}: kolejność",openMaps:"Otwórz trasę w Google Maps",scanQR:"Albo kierowca skanuje ten kod aparatem:",houseNr:"Numer domu jest w kodzie QR na każdym paragonie. Kierowca skanuje go przy drzwiach.",back:"Wstecz",gone:"Kierowca wyjechał",delTitle:"Usunąć zamówienie {c}?",remove:"Usuń",restName:"Nazwa restauracji",restAddr:"Adres restauracji",restHint:"Lokalizacja zmienia się po zmianie adresu.",restErr:"Nie znaleziono adresu. Wpisz tak: Kerkstraat 24A, 4041 XB Kesteren",maxN:"Maks. zamówień na kurs",maxAge:"Maks. wiek stosu (min)",maxDet:"Maks. dodatkowa jazda (min)",speed:"Średnia prędkość (km/h)",privacy:"Żaden adres ani zamówienie nie jest zapisywane; wszystko znika po zamknięciu aplikacji. Paragon jest czytany w telefonie, zdjęcie nigdzie nie trafia. Tylko kod pocztowy i ulica idą do PDOK (oficjalnej holenderskiej usługi adresowej), aby znaleźć lokalizację.",clear:"Usuń wszystkie zamówienia",save:"Zapisz",demoTitle:"Demo z 6 paragonami",demoBody:"Dodaje 6 przykładowych zamówień po kolei, jak po skanowaniu.",demoStart:"Pierwsze zamówienie",min:"min"},
+fr:{name:"Français",scan:"Scanner le ticket",type:"Saisir l'adresse",demo:"Démo",settings:"Réglages",language:"Langue",ready:"Lecteur prêt",loading:"Chargement du lecteur…",rerr:"Lecteur indisponible, saisis l'adresse",offline:"Pas d'internet",emptyTitle:"Aucune commande",emptyBody:"Scanne un ticket. Tu reçois un code comme B2 à écrire dessus. Le livreur prend sa pile et suit les numéros.",orders:"{n} commandes",order1:"1 commande",trip:"tournée ± {m} min",open:"ouverte depuis {m} min",late:"à envoyer",full:"pleine",start:"Lancer la livraison",writeOn:"Écris ceci sur le ticket et pose-le sur la pile {L}",newGroup:"Nouvelle pile : aucune pile ouverte ne va dans ce sens.",added:"Ajouté à la pile {L}, tournée plus longue de {m} min",precExact:"Lieu : adresse exacte",precStreet:"Lieu : rue",precArea:"Lieu : zone du code postal",check:"Vérifie que l'adresse correspond au ticket.",undo:"Annuler",edit:"Modifier l'adresse",done:"OK",next:"Suivant ({i}/6)",reading:"Lecture du ticket…",locating:"Recherche du lieu…",noRead:"Code postal illisible. Prends la photo plus près avec une bonne lumière, ou saisis l'adresse.",notFound:"Adresse introuvable. Vérifie le code postal.",noNet:"Pas de connexion internet.",enterAddr:"Saisir l'adresse",street:"Rue",nr:"N°",postcode:"Code postal",city:"Ville",ref:"Code commande",time:"Heure",add:"Ajouter la commande",cancel:"Annuler",needPc:"Saisis au moins le code postal.",route:"Pile {L} : ordre de livraison",openMaps:"Ouvrir l'itinéraire dans Google Maps",scanQR:"Ou le livreur scanne ce code avec son appareil photo :",houseNr:"Le numéro de maison est dans le QR de chaque ticket. Le livreur le scanne à la porte.",back:"Retour",gone:"Livreur parti",delTitle:"Supprimer la commande {c} ?",remove:"Supprimer",restName:"Nom du restaurant",restAddr:"Adresse du restaurant",restHint:"Le lieu se met à jour quand tu changes l'adresse.",restErr:"Adresse introuvable. Écris-la ainsi : Kerkstraat 24A, 4041 XB Kesteren",maxN:"Commandes max. par tournée",maxAge:"Âge max. de la pile (min)",maxDet:"Détour max. (min)",speed:"Vitesse moyenne (km/h)",privacy:"Aucune adresse ni commande n'est conservée ; tout disparaît à la fermeture de l'app. Le ticket est lu sur le téléphone, la photo ne part nulle part. Seuls le code postal et la rue sont envoyés à PDOK (le service d'adresses officiel des Pays-Bas) pour trouver le lieu.",clear:"Effacer toutes les commandes",save:"Enregistrer",demoTitle:"Démo avec 6 tickets",demoBody:"Ajoute 6 commandes d'exemple une par une, comme scannées.",demoStart:"Première commande",min:"min"},
+es:{name:"Español",scan:"Escanear ticket",type:"Escribir dirección",demo:"Demo",settings:"Ajustes",language:"Idioma",ready:"Lector listo",loading:"Cargando lector…",rerr:"Lector no disponible, escribe la dirección",offline:"Sin internet",emptyTitle:"Aún no hay pedidos",emptyBody:"Escanea un ticket. Recibes un código como B2 para escribir en él. El repartidor coge su montón y sigue los números.",orders:"{n} pedidos",order1:"1 pedido",trip:"ruta ± {m} min",open:"abierto {m} min",late:"enviar ya",full:"lleno",start:"Iniciar reparto",writeOn:"Escribe esto en el ticket y ponlo en el montón {L}",newGroup:"Montón nuevo: ningún montón abierto va en esta dirección.",added:"Añadido al montón {L}, ruta {m} min más larga",precExact:"Lugar: dirección exacta",precStreet:"Lugar: calle",precArea:"Lugar: zona del código postal",check:"Comprueba que la dirección coincide con el ticket.",undo:"Deshacer",edit:"Editar dirección",done:"Listo",next:"Siguiente ({i}/6)",reading:"Leyendo el ticket…",locating:"Buscando el lugar…",noRead:"No se leyó el código postal. Haz la foto más cerca con buena luz o escribe la dirección.",notFound:"Dirección no encontrada. Revisa el código postal.",noNet:"Sin conexión a internet.",enterAddr:"Escribir dirección",street:"Calle",nr:"N.º",postcode:"Código postal",city:"Ciudad",ref:"Código de pedido",time:"Hora",add:"Añadir pedido",cancel:"Cancelar",needPc:"Escribe al menos el código postal.",route:"Montón {L}: orden de reparto",openMaps:"Abrir ruta en Google Maps",scanQR:"O el repartidor escanea este código con su cámara:",houseNr:"El número de casa está en el QR de cada ticket. El repartidor lo escanea en la puerta.",back:"Atrás",gone:"Repartidor salió",delTitle:"¿Quitar el pedido {c}?",remove:"Quitar",restName:"Nombre del restaurante",restAddr:"Dirección del restaurante",restHint:"El lugar se actualiza al cambiar la dirección.",restErr:"Dirección no encontrada. Escríbela así: Kerkstraat 24A, 4041 XB Kesteren",maxN:"Máx. pedidos por ruta",maxAge:"Edad máx. del montón (min)",maxDet:"Desvío máx. (min)",speed:"Velocidad media (km/h)",privacy:"No se guarda ninguna dirección ni pedido; todo desaparece al cerrar la app. El ticket se lee en el propio teléfono y la foto no va a ningún sitio. Solo el código postal y la calle se envían a PDOK (el servicio oficial de direcciones de Países Bajos) para encontrar el lugar.",clear:"Borrar todos los pedidos",save:"Guardar",demoTitle:"Demo con 6 tickets",demoBody:"Añade 6 pedidos de ejemplo uno a uno, como si se escanearan.",demoStart:"Primer pedido",min:"min"},
+it:{name:"Italiano",scan:"Scansiona scontrino",type:"Scrivi indirizzo",demo:"Demo",settings:"Impostazioni",language:"Lingua",ready:"Lettore pronto",loading:"Caricamento lettore…",rerr:"Lettore non disponibile, scrivi l'indirizzo",offline:"Niente internet",emptyTitle:"Ancora nessun ordine",emptyBody:"Scansiona uno scontrino. Ricevi un codice come B2 da scriverci sopra. Il rider prende la sua pila e segue i numeri.",orders:"{n} ordini",order1:"1 ordine",trip:"giro ± {m} min",open:"aperta da {m} min",late:"invia ora",full:"piena",start:"Avvia consegna",writeOn:"Scrivi questo sullo scontrino e mettilo sulla pila {L}",newGroup:"Nuova pila: nessuna pila aperta va in questa direzione.",added:"Aggiunto alla pila {L}, giro più lungo di {m} min",precExact:"Posizione: indirizzo esatto",precStreet:"Posizione: via",precArea:"Posizione: zona del CAP",check:"Controlla che l'indirizzo corrisponda allo scontrino.",undo:"Annulla",edit:"Modifica indirizzo",done:"Fatto",next:"Avanti ({i}/6)",reading:"Leggo lo scontrino…",locating:"Cerco la posizione…",noRead:"CAP non letto. Fai la foto più vicino con buona luce o scrivi l'indirizzo.",notFound:"Indirizzo non trovato. Controlla il CAP.",noNet:"Nessuna connessione internet.",enterAddr:"Scrivi indirizzo",street:"Via",nr:"N.",postcode:"CAP",city:"Città",ref:"Codice ordine",time:"Ora",add:"Aggiungi ordine",cancel:"Annulla",needPc:"Scrivi almeno il CAP.",route:"Pila {L}: ordine di consegna",openMaps:"Apri percorso in Google Maps",scanQR:"Oppure il rider scansiona questo codice con la fotocamera:",houseNr:"Il numero civico è nel QR di ogni scontrino. Il rider lo scansiona alla porta.",back:"Indietro",gone:"Rider partito",delTitle:"Rimuovere l'ordine {c}?",remove:"Rimuovi",restName:"Nome del ristorante",restAddr:"Indirizzo del ristorante",restHint:"La posizione si aggiorna quando cambi l'indirizzo.",restErr:"Indirizzo non trovato. Scrivilo così: Kerkstraat 24A, 4041 XB Kesteren",maxN:"Max ordini per giro",maxAge:"Età max della pila (min)",maxDet:"Deviazione max (min)",speed:"Velocità media (km/h)",privacy:"Nessun indirizzo o ordine viene salvato; tutto sparisce quando chiudi l'app. Lo scontrino viene letto sul telefono e la foto non va da nessuna parte. Solo CAP e via vengono inviati a PDOK (il servizio ufficiale di indirizzi dei Paesi Bassi) per trovare la posizione.",clear:"Cancella tutti gli ordini",save:"Salva",demoTitle:"Demo con 6 scontrini",demoBody:"Aggiunge 6 ordini di esempio uno alla volta, come se fossero scansionati.",demoStart:"Primo ordine",min:"min"}
+};
+// ===== Language =====
+const RTL=["ar"];let LANG="nl";
+try{LANG=localStorage.getItem("rb_lang")||""}catch(e){}
+if(!I18N[LANG]){const n=(navigator.languages||[navigator.language||"nl"]).map(x=>String(x).slice(0,2).toLowerCase()).find(x=>I18N[x]);LANG=n||"nl"}
+function t(k,v){let s=(I18N[LANG]&&I18N[LANG][k])||I18N.en[k]||k;if(v)for(const x in v)s=s.split("{"+x+"}").join(v[x]);return s}
+function applyLang(){document.documentElement.lang=LANG;document.documentElement.dir=RTL.includes(LANG)?"rtl":"ltr";$("#langCode").textContent=LANG.toUpperCase();$("#scanTxt").textContent=t("scan");$("#typeTxt").textContent=t("type");$("#demoBtn").textContent=t("demo");render()}
+
 // ===== Settings (no customer data stored) =====
-const DEF={name:"Florence Pizza & Grill",addr:"Kerkstraat 24A, 4041 XB Kesteren",pc:"4041XB",lat:51.9348,lng:5.5693,maxN:4,maxAge:20,maxDet:5,speed:35};
+const DEF={name:"Florence Pizza & Grill",addr:"Kerkstraat 24A, 4041 XB Kesteren",pc:"4041XB",lat:51.9333,lng:5.5704,maxN:4,maxAge:20,maxDet:5,speed:35};
 let S=Object.assign({},DEF);
 try{const s=localStorage.getItem("rb_settings");if(s)S=Object.assign(S,JSON.parse(s))}catch(e){}
 function saveS(){try{localStorage.setItem("rb_settings",JSON.stringify(S))}catch(e){}}
 
-// ===== State (memory only – disappears on reload) =====
+// ===== State (memory only) =====
 let groups=[];let letterIdx=0;
-const COLORS=["#e8590c","#1971c2","#0b7a5c","#9c36b5","#c92a2a","#5c940d","#d6336c","#495057"];
+const HI=["#FFD43B","#63E6BE","#74C0FC","#FFA8C5","#FFC078","#B197FC","#A9E34B","#FF8787"];
 
 // ===== Geometry =====
 const R=6371;
-function km(a,b){const t=Math.PI/180,dl=(b.lat-a.lat)*t,dg=(b.lng-a.lng)*t;const h=Math.sin(dl/2)**2+Math.cos(a.lat*t)*Math.cos(b.lat*t)*Math.sin(dg/2)**2;return 2*R*Math.asin(Math.sqrt(h))}
+function km(a,b){const r=Math.PI/180,dl=(b.lat-a.lat)*r,dg=(b.lng-a.lng)*r;const h=Math.sin(dl/2)**2+Math.cos(a.lat*r)*Math.cos(b.lat*r)*Math.sin(dg/2)**2;return 2*R*Math.asin(Math.sqrt(h))}
 function mins(a,b){return km(a,b)*1.35/S.speed*60}
 function home(){return{lat:S.lat,lng:S.lng}}
-function tourMin(stops){let p=home(),t=0;for(const s of stops){t+=mins(p,s);p=s}return t+mins(p,home())}
+function tourMin(stops){let p=home(),m=0;for(const s of stops){m+=mins(p,s);p=s}return m+mins(p,home())}
 
-// ===== Labels: printed numbers never change =====
+// ===== Codes on the slips never change =====
 function pl(l){const m=String(l).match(/^(\d+)([a-z]*)$/);return{n:+m[1],s:m[2]}}
 function nl(s){if(!s)return"a";const c=s[s.length-1];return c==="z"?s+"a":s.slice(0,-1)+String.fromCharCode(c.charCodeAt(0)+1)}
 function labelAt(stops,i){
@@ -114,7 +165,7 @@ function bestInsert(stops,o){
 const base=tourMin(stops);let best=null;
 for(let i=0;i<=stops.length;i++){
 const lab=labelAt(stops,i);if(lab===null)continue;
-const t=stops.slice();t.splice(i,0,o);const d=tourMin(t)-base;
+const s2=stops.slice();s2.splice(i,0,o);const d=tourMin(s2)-base;
 if(!best||d<best.d)best={i,d,lab};
 }return best;
 }
@@ -122,7 +173,6 @@ function ageMin(g){return(Date.now()-g.created)/60000}
 function place(o){
 let best=null;
 for(const g of groups){
-if(g.gone)continue;
 if(g.stops.length>=S.maxN||ageMin(g)>=S.maxAge)continue;
 const b=bestInsert(g.stops,o);
 if(b&&b.d<=S.maxDet&&(!best||b.d<best.b.d))best={g,b};
@@ -130,7 +180,7 @@ if(b&&b.d<=S.maxDet&&(!best||b.d<best.b.d))best={g,b};
 let isNew=false;
 if(!best){
 const L=String.fromCharCode(65+(letterIdx%26));letterIdx++;
-const g={id:Date.now()+Math.random(),letter:L,color:COLORS[(letterIdx-1)%COLORS.length],created:Date.now(),stops:[]};
+const g={id:Date.now()+Math.random(),letter:L,color:HI[(letterIdx-1)%HI.length],created:Date.now(),stops:[]};
 groups.push(g);best={g,b:{i:0,d:tourMin([o]),lab:"1"}};isNew=true;
 }
 o.label=best.b.lab;best.g.stops.splice(best.b.i,0,o);
@@ -138,12 +188,12 @@ return{g:best.g,o,d:best.b.d,isNew};
 }
 function removeOrder(g,o){g.stops=g.stops.filter(x=>x!==o);if(!g.stops.length)groups=groups.filter(x=>x!==g)}
 
-// ===== Reading the slip on the phone (OCR, no upload) =====
-let ocrW=null,ocrP=null,ocrState="";
+// ===== Reading the slip on the phone (OCR, nothing uploaded) =====
+let ocrP=null,ocrState="";
 function ocrWorker(){
 if(ocrP)return ocrP;
 ocrState="loading";render();
-ocrP=Tesseract.createWorker("nld",1).then(w=>{ocrW=w;ocrState="ready";render();return w}).catch(e=>{ocrP=null;ocrState="error";render();throw e});
+ocrP=Promise.resolve().then(()=>Tesseract.createWorker("nld",1)).then(w=>{ocrState="ready";render();return w}).catch(e=>{ocrP=null;ocrState="error";render();throw e});
 return ocrP;
 }
 const normPC=s=>String(s||"").toUpperCase().replace(/\s+/g,"");
@@ -182,7 +232,7 @@ const {data}=await w.recognize(c);
 return parseSlip(data.text);
 }
 
-// ===== Address -> location: PDOK Locatieserver (official, free, all of NL) =====
+// ===== Address to location: PDOK (official Dutch address service) =====
 async function pdok(q,fq){
 const u="https://api.pdok.nl/bzk/locatieserver/search/v3_1/free?rows=1&fl=centroide_ll,weergavenaam,type&q="+encodeURIComponent(q)+(fq?"&fq="+encodeURIComponent(fq):"")+`&lat=${S.lat}&lon=${S.lng}`;
 const r=await fetch(u);if(!r.ok)throw new Error("pdok");const j=await r.json();const d=j.response&&j.response.docs&&j.response.docs[0];
@@ -196,10 +246,10 @@ if(a.street&&pc)tries.push([`${a.street} ${pc}`,"type:(adres OR weg)"]);
 if(pc)tries.push([pc,"type:postcode"]);
 if(pc.length>=4)tries.push([pc.slice(0,4),"type:postcode"]);
 if(a.street&&a.city)tries.push([`${a.street} ${a.number||""} ${a.city}`,"type:(adres OR weg)"]);
-for(const[q,fq]of tries){try{const r=await pdok(q,fq);if(r&&km(r,home())<60)return r}catch(e){if(!navigator.onLine)throw e}}
+for(const[q,fq]of tries){try{const r=await pdok(q,fq);if(r&&km(r,home())<60){if(r.src==="adres"&&!a.number)r.src="weg";return r}}catch(e){if(!navigator.onLine)throw e}}
 return null;
 }
-const PREC={adres:"العنوان بالضبط",weg:"الشارع",postcode:"منطقة الرمز البريدي"};
+function precText(s){return s==="adres"?t("precExact"):s==="weg"?t("precStreet"):t("precArea")}
 
 // ===== Image helpers =====
 function loadImg(f){return new Promise((res,rej)=>{const u=URL.createObjectURL(f),i=new Image();i.onload=()=>res(i);i.onerror=rej;i.src=u})}
@@ -209,72 +259,73 @@ function qrRef(img){try{for(const m of[1400,900]){const c=scaled(img,m),d=c.getC
 // ===== UI =====
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-function addrLine(o){return[[o.street,o.number].filter(Boolean).join(" "),o.city].filter(Boolean).join(", ")}
-function open(html){$("#sh").innerHTML=html;$("#ov").classList.add("on")}
+function street(o){return[o.street,o.number].filter(Boolean).join(" ")||o.postcode||""}
+function sub(o){return[o.postcode,o.city].filter(Boolean).join("  ")+(o.time?"   ⏱ "+o.time:"")}
+function sw(g,code,cls){return`<span class="swatch ${cls}" style="background:${g.color}"><span>${esc(code)}</span></span>`}
+function open(html){$("#sh").innerHTML='<div class="grab"></div>'+html;$("#ov").classList.add("on")}
 function close(){$("#ov").classList.remove("on");render()}
 $("#ov").addEventListener("click",e=>{if(e.target.id==="ov")close()});
+const EMPTY_ART=`<svg viewBox="0 0 132 120" aria-hidden="true"><path d="M30 6h72v100l-6-5-6 5-6-5-6 5-6-5-6 5-6-5-6 5-6-5-6 5-6-5-6 5z" fill="#F4F6F9" stroke="#161B26" stroke-width="2.5" stroke-linejoin="round"/><path d="M42 22h36M42 32h48M42 42h28" stroke="#AEB6C2" stroke-width="3" stroke-linecap="round"/><rect x="42" y="56" width="22" height="22" rx="2" fill="none" stroke="#AEB6C2" stroke-width="3"/><path d="M72 62l50-6 2 26-50 6z" fill="#FFD43B"/><text x="98" y="80" text-anchor="middle" font-family="Rubik,sans-serif" font-weight="800" font-size="20" fill="#161B26" transform="rotate(-6 98 74)">B2</text></svg>`;
 
 function render(){
-const live=groups.filter(g=>!g.gone);
-$("#st1").textContent=live.length?`${live.length} مجموعة مفتوحة · ${live.reduce((a,g)=>a+g.stops.length,0)} طلب`:"";
-$("#st2").textContent=!navigator.onLine?"⚠︎ لا يوجد إنترنت":ocrState==="ready"?"قراءة الأوراق: جاهزة":ocrState==="loading"?"قراءة الأوراق: تجهيز…":ocrState==="error"?"قراءة الأوراق: خطأ – استعمل يدوي":"";
-if(!live.length){$("#groups").innerHTML=`<div class="empty"><b style="color:var(--ink);font-size:16px">لا توجد طلبات الآن</b><br>صوّر ورقة الطلب، والبرنامج يعطيك رقماً تكتبه عليها، مثل <b dir="ltr">B2</b>.<br>السائق يأخذ أوراق مجموعته ويتبع الأرقام.</div>`;return}
-$("#groups").innerHTML=live.map(g=>{
-const a=Math.floor(ageMin(g)),late=a>=S.maxAge;
-return `<div class="grp"><div class="gh"><div class="gl" style="background:${g.color}">${g.letter}</div>
-<div class="gm"><b>${g.stops.length} طلب</b> · الرحلة ≈ ${Math.round(tourMin(g.stops))} د<br><span class="age ${late?"late":""}">مفتوحة منذ ${a} د${late?" – أرسلها الآن":""}</span>${g.stops.length>=S.maxN?' <span class="tag">ممتلئة</span>':""}</div></div>
-${g.stops.map((o,k)=>`<div class="stop"><div class="lb" style="color:${g.color}">${g.letter}${o.label}</div><div class="sa">${esc(addrLine(o))||"—"}<small>${esc(o.postcode||"")}${o.time?" · ⏱ "+esc(o.time):""}${o.ref?" · "+esc(o.ref):""}${o.src==="postcode"?" · موقع تقريبي":""}</small></div><button class="x" data-g="${g.id}" data-k="${k}">✕</button></div>`).join("")}
-<button class="go" data-go="${g.id}">ابدأ التوصيل – ${g.letter}</button></div>`}).join("");
+const n=groups.reduce((a,g)=>a+g.stops.length,0);
+const d=$("#dot");d.className="dot "+(!navigator.onLine?"bad":ocrState==="ready"?"ok":ocrState==="loading"?"busy":ocrState==="error"?"bad":"");
+$("#st2").textContent=!navigator.onLine?t("offline"):ocrState==="ready"?t("ready"):ocrState==="loading"?t("loading"):ocrState==="error"?t("rerr"):"";
+if(!n){$("#groups").innerHTML=`<div class="empty">${EMPTY_ART}<h2>${t("emptyTitle")}</h2><p>${t("emptyBody")}</p></div>`;return}
+$("#groups").innerHTML=groups.map(g=>{
+const a=Math.floor(ageMin(g)),late=a>=S.maxAge,cnt=g.stops.length;
+return `<section class="slip"><div class="sh-head">${sw(g,g.letter,"sw-big")}<div class="meta"><b>${cnt===1?t("order1"):t("orders",{n:cnt})}</b><small>${t("trip",{m:Math.round(tourMin(g.stops))})}</small><small class="${late?"late":""}">${late?t("late"):t("open",{m:a})}</small></div>${cnt>=S.maxN?`<span class="tag">${t("full")}</span>`:""}</div>
+${g.stops.map((o,k)=>`<div class="stop">${sw(g,g.letter+o.label,"sw-sm")}<div class="addr"><b>${esc(street(o))}</b><small>${esc(sub(o))}</small></div><button class="x" data-g="${g.id}" data-k="${k}" aria-label="${t("remove")}">×</button></div>`).join("")}
+<button class="go" data-go="${g.id}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>${t("start")}</button></section>`}).join("");
 }
 $("#groups").addEventListener("click",e=>{
 const go=e.target.closest("[data-go]");if(go)return depart(groups.find(g=>g.id==go.dataset.go));
 const x=e.target.closest(".x");if(x){const g=groups.find(g=>g.id==x.dataset.g),o=g.stops[+x.dataset.k];
-open(`<h2>حذف الطلب ${g.letter}${o.label}؟</h2><p class="hint">${esc(addrLine(o))}</p><div class="btns"><button class="b bs" id="no">رجوع</button><button class="b bw" id="yes">حذف</button></div>`);
+open(`<h2>${t("delTitle",{c:g.letter+o.label})}</h2><div class="card"><b>${esc(street(o))}</b>${esc(sub(o))}</div><div class="btns"><button class="b bs" id="no">${t("back")}</button><button class="b bw" id="yes">${t("remove")}</button></div>`);
 $("#no").onclick=close;$("#yes").onclick=()=>{removeOrder(g,o);close()};}
 });
 setInterval(()=>{if(!$("#ov").classList.contains("on"))render()},30000);
 
-// ----- Photo flow -----
+// ----- Scan -----
 $("#camBtn").onclick=()=>{$("#file").value="";$("#file").click()};
 $("#file").onchange=async e=>{
 const f=e.target.files[0];if(!f)return;
-open(`<div class="spin"></div><p class="hint">أقرأ الورقة…</p>`);
+open(`<div class="spin"></div><p class="hint" id="busy">${t("reading")}</p>`);
 let img,qr=null;
 try{img=await loadImg(f);qr=qrRef(img)}catch(err){}
 let j=null;
 try{j=await readSlip(img)}catch(err){}
-if(!j){return manual({ref:qr&&qr.ref,note:"لم أستطع قراءة الرمز البريدي من الصورة. صوّر الورقة أقرب وبإضاءة جيدة، أو اكتب العنوان."})}
+if(!j){return manual({ref:qr&&qr.ref,note:t("noRead")})}
 const o={ref:(qr&&qr.ref)||j.ref,street:j.street,number:j.number,postcode:j.postcode,city:j.city,time:j.time};
-$("#sh .hint").textContent="أحدد الموقع…";
+const b=$("#busy");if(b)b.textContent=t("locating");
 let ll=null;try{ll=await locate(o)}catch(err){}
-if(!ll){return manual(Object.assign(o,{note:navigator.onLine?"قرأت الورقة لكن لم أجد هذا العنوان. تأكد منه.":"لا يوجد إنترنت لتحديد الموقع."}))}
+if(!ll){return manual(Object.assign(o,{note:navigator.onLine?t("notFound"):t("noNet")}))}
 Object.assign(o,ll);result(place(o));
 };
 function result(r){
 const {g,o,d,isNew}=r;
-open(`<div class="big" style="color:${g.color}">${g.letter}${o.label}</div>
-<p class="hint">اكتب هذا الرقم على الورقة وضعها مع كومة <b>${g.letter}</b></p>
-<div class="why"><b style="color:var(--ink)" dir="ltr">${esc(addrLine(o))}</b> <span dir="ltr">${esc(o.postcode||"")}</span>${o.time?" · ⏱ "+esc(o.time):""}<br>
-${isNew?"مجموعة جديدة – لا توجد مجموعة مفتوحة في هذا الاتجاه.":`أُضيف إلى ${g.letter} (${g.stops.length} طلبات) · زيادة الطريق ≈ ${Math.max(0,Math.round(d))} د`}<br><span style="font-size:12px">الموقع: ${PREC[o.src]||"تقريبي"} · اقرأ العنوان وتأكد أنه مطابق للورقة</span></div>
-<div class="btns"><button class="b bs" id="undo">تراجع</button><button class="b bs" id="edit">تعديل العنوان</button><button class="b bp" id="ok">تم</button></div>`);
+open(`<div class="result">${sw(g,g.letter+o.label,"sw-hero")}<p class="lead">${t("writeOn",{L:g.letter})}</p></div>
+<div class="card"><b>${esc(street(o))}</b>${esc(sub(o))}<br>${isNew?t("newGroup"):t("added",{L:g.letter,m:Math.max(0,Math.round(d))})}<br>${o.src==="demo"?"":precText(o.src)+". "}${t("check")}</div>
+<div class="btns"><button class="b bs" id="undo">${t("undo")}</button><button class="b bs" id="edit">${t("edit")}</button></div>
+<div class="btns" style="margin-top:10px"><button class="b bp" id="ok">${t("done")}</button></div>`);
 $("#ok").onclick=close;
 $("#undo").onclick=()=>{removeOrder(g,o);close()};
 $("#edit").onclick=()=>{removeOrder(g,o);manual(o)};
 }
 function manual(p={}){
-open(`<h2>إدخال العنوان</h2>${p.note?`<p class="err">${esc(p.note)}</p>`:""}
-<div dir="ltr"><div class="row"><div><label>Straat</label><input id="m_st" value="${esc(p.street||"")}"></div><div style="flex:.45"><label>Nr.</label><input id="m_nr" value="${esc(p.number||"")}"></div></div>
-<div class="row"><div><label>Postcode</label><input id="m_pc" placeholder="4051 GC" value="${esc(p.postcode||"")}"></div><div><label>Plaats</label><input id="m_ci" value="${esc(p.city||"")}"></div></div>
-<div class="row"><div><label>Bestelcode</label><input id="m_ref" value="${esc(p.ref||"")}"></div><div><label>Tijd</label><input id="m_t" placeholder="19:06" value="${esc(p.time||"")}"></div></div></div>
+open(`<h2>${t("enterAddr")}</h2>${p.note?`<p class="err" style="margin:0 0 6px">${esc(p.note)}</p>`:""}
+<div class="row"><div><label for="m_st">${t("street")}</label><input id="m_st" dir="ltr" autocomplete="off" value="${esc(p.street||"")}"></div><div style="flex:.42"><label for="m_nr">${t("nr")}</label><input id="m_nr" dir="ltr" autocomplete="off" value="${esc(p.number||"")}"></div></div>
+<div class="row"><div><label for="m_pc">${t("postcode")}</label><input id="m_pc" dir="ltr" autocomplete="off" placeholder="4051 GC" value="${esc(p.postcode||"")}"></div><div><label for="m_ci">${t("city")}</label><input id="m_ci" dir="ltr" autocomplete="off" value="${esc(p.city||"")}"></div></div>
+<div class="row"><div><label for="m_ref">${t("ref")}</label><input id="m_ref" dir="ltr" autocomplete="off" value="${esc(p.ref||"")}"></div><div><label for="m_t">${t("time")}</label><input id="m_t" dir="ltr" autocomplete="off" placeholder="19:06" value="${esc(p.time||"")}"></div></div>
 <p class="err" id="m_err"></p>
-<div class="btns"><button class="b bs" id="m_no">إلغاء</button><button class="b bp" id="m_ok">أضف الطلب</button></div>`);
+<div class="btns"><button class="b bs" id="m_no">${t("cancel")}</button><button class="b bp" id="m_ok">${t("add")}</button></div>`);
 $("#m_no").onclick=close;
 $("#m_ok").onclick=async()=>{
 const o={street:$("#m_st").value.trim(),number:$("#m_nr").value.trim(),postcode:$("#m_pc").value.trim().toUpperCase(),city:$("#m_ci").value.trim(),ref:$("#m_ref").value.trim(),time:$("#m_t").value.trim()};
-if(!o.postcode&&!o.street){$("#m_err").textContent="اكتب الرمز البريدي على الأقل.";return}
+if(!o.postcode&&!o.street){$("#m_err").textContent=t("needPc");return}
 $("#m_ok").textContent="…";
 let ll=null;try{ll=await locate(o)}catch(e){}
-if(!ll){$("#m_ok").textContent="أضف الطلب";$("#m_err").textContent=navigator.onLine?"لم أجد هذا العنوان. تأكد من الرمز البريدي.":"لا يوجد إنترنت.";return}
+if(!ll){$("#m_ok").textContent=t("add");$("#m_err").textContent=navigator.onLine?t("notFound"):t("noNet");return}
 Object.assign(o,ll);result(place(o));
 };
 }
@@ -289,54 +340,59 @@ return `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${q(
 }
 function depart(g){
 const url=mapsUrl(g);
-open(`<h2>المجموعة ${g.letter} – ترتيب التوصيل</h2>
-<ol class="route">${g.stops.map(o=>`<li><span class="lb" style="color:${g.color}">${g.letter}${o.label}</span><span class="sa">${esc(addrLine(o))}<small>${esc(o.postcode||"")}${o.time?" · ⏱ "+esc(o.time):""}</small></span></li>`).join("")}</ol>
-<a class="map" href="${url}" target="_blank" rel="noopener">افتح الطريق في Google Maps</a>
-<p class="hint">أو يمسح السائق هذا الرمز بكاميرا جواله:</p><div id="qrbox"></div>
-<p class="hint" style="margin-top:10px">رقم البيت موجود في QR ورقة كل طلب – السائق يمسحه عند الباب.</p>
-<div class="btns"><button class="b bs" id="d_no">رجوع</button><button class="b bp" id="d_ok">انطلق السائق ✓</button></div>`);
-try{new QRCode($("#qrbox"),{text:url,width:220,height:220,correctLevel:QRCode.CorrectLevel.L})}catch(e){$("#qrbox").textContent="—"}
-$("#d_no").onclick=close;$("#d_ok").onclick=()=>{g.gone=true;groups=groups.filter(x=>x!==g);close()};
+open(`<h2>${t("route",{L:g.letter})}</h2>
+<ol class="route">${g.stops.map(o=>`<li>${sw(g,g.letter+o.label,"sw-sm")}<div class="addr"><b>${esc(street(o))}</b><small>${esc(sub(o))}</small></div></li>`).join("")}</ol>
+<a class="map" href="${url}" target="_blank" rel="noopener">${t("openMaps")}</a>
+<p class="small" style="text-align:center">${t("scanQR")}</p><div id="qrbox"></div>
+<p class="small" style="text-align:center;margin-top:4px">${t("houseNr")}</p>
+<div class="btns"><button class="b bs" id="d_no">${t("back")}</button><button class="b bp" id="d_ok">${t("gone")}</button></div>`);
+try{new QRCode($("#qrbox"),{text:url,width:200,height:200,colorDark:"#161B26",correctLevel:QRCode.CorrectLevel.L})}catch(e){}
+$("#d_no").onclick=close;$("#d_ok").onclick=()=>{groups=groups.filter(x=>x!==g);close()};
 }
+
+// ----- Language -----
+$("#langBtn").onclick=()=>{
+open(`<h2>${t("language")}</h2><div class="langs">${Object.keys(I18N).map(k=>`<button class="lang ${k===LANG?"on":""}" data-l="${k}" lang="${k}">${I18N[k].name}</button>`).join("")}</div>`);
+$("#sh").querySelectorAll("[data-l]").forEach(b=>b.onclick=()=>{LANG=b.dataset.l;try{localStorage.setItem("rb_lang",LANG)}catch(e){}applyLang();close()});
+};
 
 // ----- Settings -----
 $("#setBtn").onclick=()=>{
-open(`<h2>الإعدادات</h2>
-<label>اسم المطعم</label><input id="s_n" value="${esc(S.name)}">
-<label>عنوان المطعم</label><input id="s_a" dir="ltr" value="${esc(S.addr)}">
-<p class="hint" id="s_loc" style="text-align:start;margin:6px 0 0;font-size:12px">موقع المطعم محدد · يتحدث تلقائياً عند تغيير العنوان</p>
-<div class="row"><div><label>أقصى عدد طلبات في الرحلة</label><input id="s_n2" type="number" value="${S.maxN}"></div><div><label>أقصى عمر للمجموعة (دقيقة)</label><input id="s_age" type="number" value="${S.maxAge}"></div></div>
-<div class="row"><div><label>أقصى زيادة في الطريق (دقيقة)</label><input id="s_det" type="number" value="${S.maxDet}"></div><div><label>متوسط السرعة (كم/س)</label><input id="s_sp" type="number" value="${S.speed}"></div></div>
-<div class="why" style="margin-top:14px">الخصوصية: لا يُحفظ أي عنوان أو طلب. كل شيء يُمسح عند إغلاق الصفحة. الورقة تُقرأ داخل الجوال نفسه، والصورة لا تُرسل لأي مكان. يُرسل فقط الرمز البريدي والشارع إلى خدمة العناوين الهولندية الرسمية (PDOK) لتحديد الموقع. تُحفظ على هذا الجهاز إعدادات المطعم فقط.</div>
-<div class="btns"><button class="b bw" id="s_clr">مسح كل الطلبات</button><button class="b bp" id="s_ok">حفظ</button></div>`);
+open(`<h2>${t("settings")}</h2>
+<label for="s_n">${t("restName")}</label><input id="s_n" value="${esc(S.name)}">
+<label for="s_a">${t("restAddr")}</label><input id="s_a" dir="ltr" value="${esc(S.addr)}">
+<p class="small" id="s_loc" style="margin-top:6px">${t("restHint")}</p>
+<div class="row"><div><label for="s_n2">${t("maxN")}</label><input id="s_n2" type="number" inputmode="numeric" value="${S.maxN}"></div><div><label for="s_age">${t("maxAge")}</label><input id="s_age" type="number" inputmode="numeric" value="${S.maxAge}"></div></div>
+<div class="row"><div><label for="s_det">${t("maxDet")}</label><input id="s_det" type="number" inputmode="numeric" value="${S.maxDet}"></div><div><label for="s_sp">${t("speed")}</label><input id="s_sp" type="number" inputmode="numeric" value="${S.speed}"></div></div>
+<p class="small">${t("privacy")}</p>
+<div class="btns"><button class="b bw" id="s_clr">${t("clear")}</button><button class="b bp" id="s_ok">${t("save")}</button></div>`);
 $("#s_ok").onclick=async()=>{
 const na=$("#s_a").value.trim();
 if(na!==S.addr){$("#s_ok").textContent="…";let r=null;try{r=await pdok(na,"type:adres")}catch(e){}
-if(!r){$("#s_ok").textContent="حفظ";$("#s_loc").textContent="لم أجد عنوان المطعم. اكتبه هكذا: Kerkstraat 24A, 4041 XB Kesteren";$("#s_loc").style.color="var(--warn)";return}
+if(!r){$("#s_ok").textContent=t("save");const l=$("#s_loc");l.textContent=t("restErr");l.style.color="var(--red)";return}
 S.lat=r.lat;S.lng=r.lng;S.addr=na;const m=na.match(/([1-9]\d{3}) ?([A-Za-z]{2})/);S.pc=m?(m[1]+m[2]).toUpperCase():"";}
 S.name=$("#s_n").value;S.maxN=Math.max(1,+$("#s_n2").value||4);S.maxAge=Math.max(1,+$("#s_age").value||20);S.maxDet=Math.max(0,+$("#s_det").value||5);S.speed=Math.max(5,+$("#s_sp").value||35);saveS();close()};
 $("#s_clr").onclick=()=>{groups=[];letterIdx=0;close()};
 };
 
-// ----- Demo: 6 sample slips (fake addresses) -----
+// ----- Demo: 6 sample slips (made-up addresses) -----
 $("#demoBtn").onclick=()=>{
 const demo=[
-{street:"Benthuizenstraat",postcode:"4051 GC",city:"Ochten",lat:51.9105,lng:5.5745,time:"19:06",ref:"DEMO1"},
+{street:"Benthuizenstraat",postcode:"4051 GC",city:"Ochten",lat:51.9133,lng:5.5724,time:"19:06",ref:"DEMO1"},
 {street:"Dorpsstraat",postcode:"4043 KK",city:"Opheusden",lat:51.9315,lng:5.6335,time:"19:10",ref:"DEMO2"},
 {street:"Fruitstraat",postcode:"4051 CE",city:"Ochten",lat:51.9082,lng:5.5690,time:"19:12",ref:"DEMO3"},
 {street:"Hoofdstraat",postcode:"4041 AE",city:"Kesteren",lat:51.9372,lng:5.5641,time:"19:15",ref:"DEMO4"},
 {street:"Waalbandijk",postcode:"4051 LB",city:"Ochten",lat:51.9047,lng:5.5790,time:"19:18",ref:"DEMO5"},
 {street:"Tielsestraat",postcode:"4043 JR",city:"Opheusden",lat:51.9282,lng:5.6260,time:"19:20",ref:"DEMO6"}];
 let i=0;
-open(`<h2>تجربة بست أوراق</h2><p class="hint">أضيف 6 طلبات تجريبية واحداً واحداً، كأن العامل يصوّرها.</p><div class="btns"><button class="b bs" id="dm_no">إلغاء</button><button class="b bp" id="dm_go">الطلب التالي (1/6)</button></div>`);
+open(`<h2>${t("demoTitle")}</h2><p class="lead">${t("demoBody")}</p><div class="btns"><button class="b bs" id="dm_no">${t("cancel")}</button><button class="b bp" id="dm_go">${t("demoStart")}</button></div>`);
 $("#dm_no").onclick=close;
 const next=()=>{const r=place(Object.assign({src:"demo"},demo[i]));i++;result(r);
-if(i<demo.length){$("#ok").textContent=`التالي (${i+1}/6)`;$("#ok").onclick=next}};
+if(i<demo.length){$("#ok").textContent=t("next",{i:i+1});$("#ok").onclick=next}};
 $("#dm_go").onclick=next;
 };
-render();
+applyLang();
 addEventListener("online",render);addEventListener("offline",render);
-// Prepare the reader in the background so the first photo is fast
 setTimeout(()=>{ocrWorker().catch(()=>{})},1500);
 if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
 </script>
