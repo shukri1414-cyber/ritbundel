@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+    <meta name="theme-color" content="#1b1d1f">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="RitBundel">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="icon" href="icon.svg">
+    <link rel="apple-touch-icon" href="icon.svg">
+    <title>RitBundel – تجميع طلبات التوصيل</title>
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;600;700&family=JetBrains+Mono:wght@700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <style>
+    :root{--bg:#f4f1ea;--card:#fff;--ink:#1b1d1f;--mute:#6b6f74;--line:#e3ded3;--acc:#e8590c;--acc2:#0b7a5c;--warn:#b42318;--r:16px}
+    *{box-sizing:border-box;margin:0}
+    body{font-family:"IBM Plex Sans Arabic",system-ui,sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;padding-bottom:120px}
+    header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:var(--ink);color:#fff;position:sticky;top:0;z-index:5}
+    header h1{font-size:18px;font-weight:700;letter-spacing:.2px}
+    header h1 span{color:var(--acc)}
+    header .hb{display:flex;gap:6px}
+    .ib{background:#2c2f33;color:#fff;border:0;border-radius:10px;padding:8px 11px;font:inherit;font-size:13px;cursor:pointer}
+    main{padding:14px;max-width:640px;margin:0 auto}
+    .status{font-size:13px;color:var(--mute);margin:2px 2px 12px;display:flex;justify-content:space-between;gap:8px}
+    .empty{background:var(--card);border:1.5px dashed var(--line);border-radius:var(--r);padding:28px 18px;text-align:center;color:var(--mute);line-height:1.8}
+    .grp{background:var(--card);border-radius:var(--r);margin-bottom:14px;box-shadow:0 1px 0 var(--line),0 6px 18px -12px rgba(0,0,0,.25);overflow:hidden}
+    .gh{display:flex;align-items:center;gap:12px;padding:12px 14px;border-bottom:1px solid var(--line)}
+    .gl{font-family:"JetBrains Mono",monospace;font-weight:800;font-size:28px;width:52px;height:52px;border-radius:12px;display:grid;place-items:center;color:#fff;flex:none}
+    .gm{flex:1;font-size:13px;color:var(--mute);line-height:1.6}
+    .gm b{color:var(--ink);font-size:15px}
+    .age.late{color:var(--warn);font-weight:700}
+    .stop{display:flex;align-items:center;gap:12px;padding:10px 14px;border-bottom:1px solid #f1ede5}
+    .stop:last-child{border-bottom:0}
+    .lb{font-family:"JetBrains Mono",monospace;font-weight:800;font-size:17px;min-width:52px;text-align:center;padding:4px 6px;border-radius:8px;background:#f4f1ea;direction:ltr}
+    .sa{flex:1;font-size:14px;line-height:1.45;direction:ltr;text-align:left}
+    .sa small{display:block;color:var(--mute);font-size:12px}
+    .x{background:none;border:0;color:var(--mute);font-size:18px;padding:4px 8px;cursor:pointer}
+    .go{display:block;width:calc(100% - 28px);margin:10px 14px 14px;padding:13px;border:0;border-radius:12px;background:var(--acc2);color:#fff;font:inherit;font-weight:700;font-size:16px;cursor:pointer}
+    .dock{position:fixed;bottom:0;left:0;right:0;padding:12px 14px calc(12px + env(safe-area-inset-bottom));background:linear-gradient(transparent,var(--bg) 35%);display:flex;gap:10px;max-width:640px;margin:0 auto}
+    .cam{flex:1;display:flex;align-items:center;justify-content:center;gap:10px;background:var(--acc);color:#fff;border:0;border-radius:16px;padding:18px;font:inherit;font-weight:700;font-size:18px;cursor:pointer;box-shadow:0 8px 20px -8px rgba(232,89,12,.7)}
+    .man{background:var(--card);color:var(--ink);border:1.5px solid var(--line);border-radius:16px;padding:0 16px;font:inherit;font-weight:600;cursor:pointer}
+    .ov{position:fixed;inset:0;background:rgba(20,20,20,.55);display:none;align-items:flex-end;justify-content:center;z-index:20}
+    .ov.on{display:flex}
+    .sh{background:var(--card);width:100%;max-width:640px;border-radius:22px 22px 0 0;padding:20px 18px calc(20px + env(safe-area-inset-bottom));max-height:92vh;overflow:auto}
+    .sh h2{font-size:18px;margin-bottom:12px}
+    .big{font-family:"JetBrains Mono",monospace;font-weight:800;font-size:76px;text-align:center;line-height:1;padding:18px 0 8px;direction:ltr}
+    .hint{text-align:center;color:var(--mute);font-size:14px;margin-bottom:14px}
+    .why{background:#f7f5f0;border-radius:12px;padding:10px 12px;font-size:13px;color:var(--mute);line-height:1.7;margin-bottom:14px}
+    label{display:block;font-size:12px;color:var(--mute);margin:10px 0 4px}
+    input,select{width:100%;padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;font:inherit;font-size:16px;background:#fff}
+    .row{display:flex;gap:8px}.row>div{flex:1}
+    .btns{display:flex;gap:10px;margin-top:16px}
+    .b{flex:1;padding:14px;border-radius:12px;border:0;font:inherit;font-weight:700;font-size:16px;cursor:pointer}
+    .bp{background:var(--ink);color:#fff}.bs{background:#efebe3;color:var(--ink)}.bw{background:#fdecea;color:var(--warn)}
+    .spin{width:44px;height:44px;border:4px solid var(--line);border-top-color:var(--acc);border-radius:50%;margin:26px auto 14px;animation:s 1s linear infinite}
+    @keyframes s{to{transform:rotate(360deg)}}
+    .route li{display:flex;gap:12px;align-items:center;padding:9px 0;border-bottom:1px solid #f1ede5;direction:ltr}
+    .route{list-style:none;padding:0;margin-bottom:12px}
+    #qrbox{display:flex;justify-content:center;padding:10px;background:#fff}
+    a.map{display:block;text-align:center;background:var(--acc2);color:#fff;text-decoration:none;padding:14px;border-radius:12px;font-weight:700;margin:10px 0}
+    .err{color:var(--warn);font-size:14px;margin-top:8px}
+    .tag{display:inline-block;font-size:11px;padding:2px 7px;border-radius:20px;background:#f4f1ea;color:var(--mute);margin-inline-start:6px}
+    </style>
+  </head>
+  <body>
+    <header><h1>Rit<span>Bundel</span></h1><div class="hb"><button class="ib" id="demoBtn">تجربة</button>button><button class="ib" id="setBtn">الإعدادات</button>button></div>div></header>
+  <main>
+    <div class="status"><span id="st1"></span><span id="st2"></span></div>div>
+    <div id="groups"></div>div>
+  </main>
+    <div class="dock">
+      <button class="cam" id="camBtn"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h3l2-3h6l2 3h3v13H4z"/><circle cx="12" cy="13" r="4"/></svg>svg>صوّر ورقة الطلب</button>button>
+      <button class="man" id="manBtn">يدوي</button>button>
+    </div>div>
+    <input type="file" id="file" accept="image/*" capture="environment" hidden>
+
+    <div class="ov" id="ov"><div class="sh" id="sh"></div>div></div>div>
+
+    <script>
+      // ===== Settings (no customer data stored) =====
+      const DEF={name:"Florence Pizza & Grill",addr:"Kerkstraat 24A, 4041 XB Kesteren",pc:"4041XB",lat:51.9348,lng:5.5693,maxN:4,maxAge:20,maxDet:5,speed:35};
+      let S=Object.assign({},DEF);
+      try{const s=localStorage.getItem("rb_settings");if(s)S=Object.assign(S,JSON.parse(s))}catch(e){}
+      function saveS(){try{localStorage.setItem("rb_settings",JSON.stringify(S))}catch(e){}}
+
+      // ===== State (memory only – disappears on reload) =====
+      let groups=[];let letterIdx=0;
+      const COLORS=["#e8590c","#1971c2","#0b7a5c","#9c36b5","#c92a2a","#5c940d","#d6336c","#495057"];
+
+      // ===== Geometry =====
+      const R=6371;
+      function km(a,b){const t=Math.PI/180,dl=(b.lat-a.lat)*t,dg=(b.lng-a.lng)*t;const h=Math.sin(dl/2)**2+Math.cos(a.lat*t)*Math.cos(b.lat*t)*Math.sin(dg/2)**2;return 2*R*Math.asin(Math.sqrt(h))}
+      function mins(a,b){return km(a,b)*1.35/S.speed*60}
+      function home(){return{lat:S.lat,lng:S.lng}}
+      function tourMin(stops){let p=home(),t=0;for(const s of stops){t+=mins(p,s);p=s}return t+mins(p,home())}
+
+      // ===== Labels: printed numbers never change =====
+      function pl(l){const m=String(l).match(/^(\d+)([a-z]*)$/);return{n:+m[1],s:m[2]}}
+      function nl(s){if(!s)return"a";const c=s[s.length-1];return c==="z"?s+"a":s.slice(0,-1)+String.fromCharCode(c.charCodeAt(0)+1)}
+      function labelAt(stops,i){
+        if(!stops.length)return"1";
+        const prev=i>0?pl(stops[i-1].label):null,next=i<stops.length?pl(stops[i].label):null;
+        if(!prev){return next.n>=1&&!next.s?String(next.n-1):null}
+        if(!next)return String(prev.n+1);
+        return next.n>prev.n?prev.n+nl(prev.s):null;
+      }
+      function bestInsert(stops,o){
+        const base=tourMin(stops);let best=null;
+        for(let i=0;i<=stops.length;i++){
+          const lab=labelAt(stops,i);if(lab===null)continue;
+          const t=stops.slice();t.splice(i,0,o);const d=tourMin(t)-base;
+          if(!best||d<best.d)best={i,d,lab};
+        }return best;
+      }
+      function ageMin(g){return(Date.now()-g.created)/60000}
+      function place(o){
+        let best=null;
+        for(const g of groups){
+          if(g.gone)continue;
+          if(g.stops.length>=S.maxN||ageMin(g)>=S.maxAge)continue;
+          const b=bestInsert(g.stops,o);
+          if(b&&b.d<=S.maxDet&&(!best||b.d<best.b.d))best={g,b};
+        }
+        let isNew=false;
+        if(!best){
+          const L=String.fromCharCode(65+(letterIdx%26));letterIdx++;
+          const g={id:Date.now()+Math.random(),letter:L,color:COLORS[(letterIdx-1)%COLORS.length],created:Date.now(),stops:[]};
+          groups.push(g);best={g,b:{i:0,d:tourMin([o]),lab:"1"}};isNew=true;
+        }
+        o.label=best.b.lab;best.g.stops.splice(best.b.i,0,o);
+        return{g:best.g,o,d:best.b.d,isNew};
+      }
+      function removeOrder(g,o){g.stops=g.stops.filter(x=>x!==o);if(!g.stops.length)groups=groups.filter(x=>x!==g)}
+
+      // ===== Reading the slip on the phone (OCR, no upload) =====
+      let ocrW=null,ocrP=null,ocrState="";
+      function ocrWorker(){
+        if(ocrP)return ocrP;
+        ocrState="loading";render();
+        ocrP=Tesseract.createWorker("nld",1).then(w=>{ocrW=w;ocrState="ready";render();return w}).catch(e=>{ocrP=null;ocrState="error";render();throw e});
+        return ocrP;
+      }
+      const normPC=s=>String(s||"").toUpperCase().replace(/\s+/g,"");
+      function fixDigits(s){return s.replace(/[Oo]/g,"0").replace(/[Il|]/g,"1").replace(/S/g,"5").replace(/B/g,"8")}
+      function parseSlip(text){
+        const L=text.split(/\r?\n/).map(s=>s.replace(/\s+/g," ").trim()).filter(Boolean);
+        const own=normPC(S.pc);let cand=[];
+        const levIdx=L.findIndex(l=>/levering|bezorg|bevestigde/i.test(l));
+        L.forEach((l,i)=>{
+          const m=l.match(/(?:^|[^0-9A-Za-z])([1-9OoIl][0-9OoIlSB]{3}) ?([A-Za-z]{2})\b(.*)$/);
+          if(!m)return;
+          const pc=fixDigits(m[1])+m[2].toUpperCase();
+          if(!/^[1-9]\d{3}[A-Z]{2}$/.test(pc)||pc===own||/tel/i.test(l))return;
+          cand.push({i,pc,city:m[3].replace(/[^A-Za-zÀ-ÿ' -]/g,"").trim()});
+        });
+        if(!cand.length)return null;
+        const c=cand.find(x=>levIdx>=0&&x.i>levIdx)||cand[cand.length>1?1:0];
+        let street=null,number=null;
+        for(let k=c.i-1;k>=Math.max(0,c.i-2);k--){
+          const s=L[k];if(/bevestigde|levering|tijd|\d{1,2}:\d{2}/i.test(s))break;
+          const m=s.match(/^(.*?[A-Za-zÀ-ÿ.'-]{3,})\s+(\d{1,5}\s?[A-Za-z]?(?:[- ]\d{1,4})?)$/);
+          if(m){street=m[1];number=m[2];break}
+          if(/(straat|weg|laan|plein|dijk|kade|singel|hof|gracht|dreef|pad|steeg|markt|ring|park|veld|erf|baan|wal|dam|haven|tuin|berg|meer|akker|kamp|hoek|zoom|oord|dal|burg|rade|horst)\b/i.test(s)||k===c.i-1){street=s.replace(/[^A-Za-zÀ-ÿ0-9 .'-]/g,"").trim();if(/(straat|weg|laan|plein|dijk|kade|singel|hof|gracht|dreef|pad|steeg|markt|ring)/i.test(s))break}
+        }
+        let time=null;const ti=L.findIndex(l=>/bevestigde|tijd/i.test(l));
+        for(let k=Math.max(0,ti);k<Math.min(L.length,(ti<0?L.length:ti+3));k++){const m=L[k].match(/\b([01]?\d|2[0-3])[:.]([0-5]\d)\b/);if(m&&!/\d{2}-\d{2}-\d{4}/.test(L[k])){time=m[1].padStart(2,"0")+":"+m[2];break}}
+        const r=L.find(l=>/^[A-Z0-9]{6}$/.test(l)&&/[A-Z]/.test(l)&&/\d/.test(l)&&!/^\d{4}[A-Z]{2}$/.test(l));
+        return{street,number,postcode:c.pc.slice(0,4)+" "+c.pc.slice(4),city:c.city||null,time,ref:r||null};
+      }
+      async function readSlip(img){
+        const w=await ocrWorker();
+        const c=scaled(img,2400),x=c.getContext("2d"),d=x.getImageData(0,0,c.width,c.height),p=d.data;
+        for(let i=0;i<p.length;i+=4){const v=.3*p[i]+.59*p[i+1]+.11*p[i+2];p[i]=p[i+1]=p[i+2]=v}
+        x.putImageData(d,0,0);
+        const {data}=await w.recognize(c);
+        return parseSlip(data.text);
+      }
+
+      // ===== Address -> location: PDOK Locatieserver (official, free, all of NL) =====
+      async function pdok(q,fq){
+        const u="https://api.pdok.nl/bzk/locatieserver/search/v3_1/free?rows=1&fl=centroide_ll,weergavenaam,type&q="+encodeURIComponent(q)+(fq?"&fq="+encodeURIComponent(fq):"")+`&lat=${S.lat}&lon=${S.lng}`;
+        const r=await fetch(u);if(!r.ok)throw new Error("pdok");const j=await r.json();const d=j.response&&j.response.docs&&j.response.docs[0];
+        if(!d||!d.centroide_ll)return null;const m=d.centroide_ll.match(/POINT\(([-\d.]+) ([-\d.]+)\)/);
+        return m?{lat:+m[2],lng:+m[1],src:d.type,name:d.weergavenaam}:null;
+      }
+      async function locate(a){
+        const pc=normPC(a.postcode),tries=[];
+        if(a.street&&a.number&&pc)tries.push([`${a.street} ${a.number} ${pc}`,"type:adres"]);
+        if(a.street&&pc)tries.push([`${a.street} ${pc}`,"type:(adres OR weg)"]);
+        if(pc)tries.push([pc,"type:postcode"]);
+        if(pc.length>=4)tries.push([pc.slice(0,4),"type:postcode"]);
+        if(a.street&&a.city)tries.push([`${a.street} ${a.number||""} ${a.city}`,"type:(adres OR weg)"]);
+        for(const[q,fq]of tries){try{const r=await pdok(q,fq);if(r&&km(r,home())<60)return r}catch(e){if(!navigator.onLine)throw e}}
+        return null;
+      }
+      const PREC={adres:"العنوان بالضبط",weg:"الشارع",postcode:"منطقة الرمز البريدي"};
+
+      // ===== Image helpers =====
+      function loadImg(f){return new Promise((res,rej)=>{const u=URL.createObjectURL(f),i=new Image();i.onload=()=>res(i);i.onerror=rej;i.src=u})}
+      function scaled(img,max){const k=Math.min(1,max/Math.max(img.width,img.height)),c=document.createElement("canvas");c.width=Math.round(img.width*k);c.height=Math.round(img.height*k);c.getContext("2d").drawImage(img,0,0,c.width,c.height);return c}
+      function qrRef(img){try{for(const m of[1400,900]){const c=scaled(img,m),d=c.getContext("2d").getImageData(0,0,c.width,c.height),q=window.jsQR&&jsQR(d.data,c.width,c.height);if(q&&q.data){const r=q.data.match(/[?&]ref=([A-Za-z0-9]+)/);return{raw:q.data,ref:r?r[1]:null}}}}catch(e){}return null}
+
+      // ===== UI =====
+      const $=s=>document.querySelector(s);
+      const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+      function addrLine(o){return[[o.street,o.number].filter(Boolean).join(" "),o.city].filter(Boolean).join(", ")}
+      function open(html){$("#sh").innerHTML=html;$("#ov").classList.add("on")}
+      function close(){$("#ov").classList.remove("on");render()}
+      $("#ov").addEventListener("click",e=>{if(e.target.id==="ov")close()});
+
+      function render(){
+        const live=groups.filter(g=>!g.gone);
+        $("#st1").textContent=live.length?`${live.length} مجموعة مفتوحة · ${live.reduce((a,g)=>a+g.stops.length,0)} طلب`:"";
+        $("#st2").textContent=!navigator.onLine?"⚠︎ لا يوجد إنترنت":ocrState==="ready"?"قراءة الأوراق: جاهزة":ocrState==="loading"?"قراءة الأوراق: تجهيز…":ocrState==="error"?"قراءة الأوراق: خطأ – استعمل يدوي":"";
+        if(!live.length){$("#groups").innerHTML=`<div class="empty"><b style="color:var(--ink);font-size:16px">لا توجد طلبات الآن</b><br>صوّر ورقة الطلب، والبرنامج يعطيك رقماً تكتبه عليها، مثل <b dir="ltr">B2</b>.<br>السائق يأخذ أوراق مجموعته ويتبع الأرقام.</div>`;return}
+        $("#groups").innerHTML=live.map(g=>{
+          const a=Math.floor(ageMin(g)),late=a>=S.maxAge;
+          return `<div class="grp"><div class="gh"><div class="gl" style="background:${g.color}">${g.letter}</div>
+          <div class="gm"><b>${g.stops.length} طلب</b> · الرحلة ≈ ${Math.round(tourMin(g.stops))} د<br><span class="age ${late?"late":""}">مفتوحة منذ ${a} د${late?" – أرسلها الآن":""}</span>${g.stops.length>=S.maxN?' <span class="tag">ممتلئة</span>':""}</div></div>
+          ${g.stops.map((o,k)=>`<div class="stop"><div class="lb" style="color:${g.color}">${g.letter}${o.label}</div><div class="sa">${esc(addrLine(o))||"—"}<small>${esc(o.postcode||"")}${o.time?" · ⏱ "+esc(o.time):""}${o.ref?" · "+esc(o.ref):""}${o.src==="postcode"?" · موقع تقريبي":""}</small></div><button class="x" data-g="${g.id}" data-k="${k}">✕</button></div>`).join("")}
+          <button class="go" data-go="${g.id}">ابدأ التوصيل – ${g.letter}</button></div>`}).join("");
+      }
+      $("#groups").addEventListener("click",e=>{
+        const go=e.target.closest("[data-go]");if(go)return depart(groups.find(g=>g.id==go.dataset.go));
+        const x=e.target.closest(".x");if(x){const g=groups.find(g=>g.id==x.dataset.g),o=g.stops[+x.dataset.k];
+                                             open(`<h2>حذف الطلب ${g.letter}${o.label}؟</h2><p class="hint">${esc(addrLine(o))}</p><div class="btns"><button class="b bs" id="no">رجوع</button><button class="b bw" id="yes">حذف</button></div>`);
+                                             $("#no").onclick=close;$("#yes").onclick=()=>{removeOrder(g,o);close()};}
+      });
+      setInterval(()=>{if(!$("#ov").classList.contains("on"))render()},30000);
+
+      // ----- Photo flow -----
+      $("#camBtn").onclick=()=>{$("#file").value="";$("#file").click()};
+      $("#file").onchange=async e=>{
+        const f=e.target.files[0];if(!f)return;
+        open(`<div class="spin"></div><p class="hint">أقرأ الورقة…</p>`);
+        let img,qr=null;
+        try{img=await loadImg(f);qr=qrRef(img)}catch(err){}
+        let j=null;
+        try{j=await readSlip(img)}catch(err){}
+        if(!j){return manual({ref:qr&&qr.ref,note:"لم أستطع قراءة الرمز البريدي من الصورة. صوّر الورقة أقرب وبإضاءة جيدة، أو اكتب العنوان."})}
+        const o={ref:(qr&&qr.ref)||j.ref,street:j.street,number:j.number,postcode:j.postcode,city:j.city,time:j.time};
+        $("#sh .hint").textContent="أحدد الموقع…";
+        let ll=null;try{ll=await locate(o)}catch(err){}
+        if(!ll){return manual(Object.assign(o,{note:navigator.onLine?"قرأت الورقة لكن لم أجد هذا العنوان. تأكد منه.":"لا يوجد إنترنت لتحديد الموقع."}))}
+        Object.assign(o,ll);result(place(o));
+      };
+      function result(r){
+        const {g,o,d,isNew}=r;
+        open(`<div class="big" style="color:${g.color}">${g.letter}${o.label}</div>
+        <p class="hint">اكتب هذا الرقم على الورقة وضعها مع كومة <b>${g.letter}</b></p>
+        <div class="why"><b style="color:var(--ink)" dir="ltr">${esc(addrLine(o))}</b> <span dir="ltr">${esc(o.postcode||"")}</span>${o.time?" · ⏱ "+esc(o.time):""}<br>
+        ${isNew?"مجموعة جديدة – لا توجد مجموعة مفتوحة في هذا الاتجاه.":`أُضيف إلى ${g.letter} (${g.stops.length} طلبات) · زيادة الطريق ≈ ${Math.max(0,Math.round(d))} د`}<br><span style="font-size:12px">الموقع: ${PREC[o.src]||"تقريبي"} · اقرأ العنوان وتأكد أنه مطابق للورقة</span></div>
+        <div class="btns"><button class="b bs" id="undo">تراجع</button><button class="b bs" id="edit">تعديل العنوان</button><button class="b bp" id="ok">تم</button></div>`);
+        $("#ok").onclick=close;
+        $("#undo").onclick=()=>{removeOrder(g,o);close()};
+        $("#edit").onclick=()=>{removeOrder(g,o);manual(o)};
+      }
+      function manual(p={}){
+        open(`<h2>إدخال العنوان</h2>${p.note?`<p class="err">${esc(p.note)}</p>`:""}
+        <div dir="ltr"><div class="row"><div><label>Straat</label><input id="m_st" value="${esc(p.street||"")}"></div><div style="flex:.45"><label>Nr.</label><input id="m_nr" value="${esc(p.number||"")}"></div></div>
+        <div class="row"><div><label>Postcode</label><input id="m_pc" placeholder="4051 GC" value="${esc(p.postcode||"")}"></div><div><label>Plaats</label><input id="m_ci" value="${esc(p.city||"")}"></div></div>
+        <div class="row"><div><label>Bestelcode</label><input id="m_ref" value="${esc(p.ref||"")}"></div><div><label>Tijd</label><input id="m_t" placeholder="19:06" value="${esc(p.time||"")}"></div></div></div>
+        <p class="err" id="m_err"></p>
+        <div class="btns"><button class="b bs" id="m_no">إلغاء</button><button class="b bp" id="m_ok">أضف الطلب</button></div>`);
+        $("#m_no").onclick=close;
+        $("#m_ok").onclick=async()=>{
+          const o={street:$("#m_st").value.trim(),number:$("#m_nr").value.trim(),postcode:$("#m_pc").value.trim().toUpperCase(),city:$("#m_ci").value.trim(),ref:$("#m_ref").value.trim(),time:$("#m_t").value.trim()};
+          if(!o.postcode&&!o.street){$("#m_err").textContent="اكتب الرمز البريدي على الأقل.";return}
+          $("#m_ok").textContent="…";
+          let ll=null;try{ll=await locate(o)}catch(e){}
+          if(!ll){$("#m_ok").textContent="أضف الطلب";$("#m_err").textContent=navigator.onLine?"لم أجد هذا العنوان. تأكد من الرمز البريدي.":"لا يوجد إنترنت.";return}
+          Object.assign(o,ll);result(place(o));
+        };
+      }
+      $("#manBtn").onclick=()=>manual();
+
+      // ----- Departure -----
+      function q(o){return encodeURIComponent([[o.street,o.number].filter(Boolean).join(" "),o.postcode,o.city,"Nederland"].filter(Boolean).join(", "))}
+      function mapsUrl(g){
+        const st=g.stops,origin=encodeURIComponent(S.addr+", Nederland"),last=st[st.length-1];
+        const wp=st.slice(0,-1).map(q).join("%7C");
+        return `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${q(last)}${wp?"&waypoints="+wp:""}&travelmode=driving`;
+      }
+      function depart(g){
+        const url=mapsUrl(g);
+        open(`<h2>المجموعة ${g.letter} – ترتيب التوصيل</h2>
+        <ol class="route">${g.stops.map(o=>`<li><span class="lb" style="color:${g.color}">${g.letter}${o.label}</span><span class="sa">${esc(addrLine(o))}<small>${esc(o.postcode||"")}${o.time?" · ⏱ "+esc(o.time):""}</small></span></li>`).join("")}</ol>
+        <a class="map" href="${url}" target="_blank" rel="noopener">افتح الطريق في Google Maps</a>
+        <p class="hint">أو يمسح السائق هذا الرمز بكاميرا جواله:</p><div id="qrbox"></div>
+        <p class="hint" style="margin-top:10px">رقم البيت موجود في QR ورقة كل طلب – السائق يمسحه عند الباب.</p>
+        <div class="btns"><button class="b bs" id="d_no">رجوع</button><button class="b bp" id="d_ok">انطلق السائق ✓</button></div>`);
+        try{new QRCode($("#qrbox"),{text:url,width:220,height:220,correctLevel:QRCode.CorrectLevel.L})}catch(e){$("#qrbox").textContent="—"}
+        $("#d_no").onclick=close;$("#d_ok").onclick=()=>{g.gone=true;groups=groups.filter(x=>x!==g);close()};
+      }
+
+      // ----- Settings -----
+      $("#setBtn").onclick=()=>{
+        open(`<h2>الإعدادات</h2>
+        <label>اسم المطعم</label><input id="s_n" value="${esc(S.name)}">
+        <label>عنوان المطعم</label><input id="s_a" dir="ltr" value="${esc(S.addr)}">
+        <p class="hint" id="s_loc" style="text-align:start;margin:6px 0 0;font-size:12px">موقع المطعم محدد · يتحدث تلقائياً عند تغيير العنوان</p>
+        <div class="row"><div><label>أقصى عدد طلبات في الرحلة</label><input id="s_n2" type="number" value="${S.maxN}"></div><div><label>أقصى عمر للمجموعة (دقيقة)</label><input id="s_age" type="number" value="${S.maxAge}"></div></div>
+        <div class="row"><div><label>أقصى زيادة في الطريق (دقيقة)</label><input id="s_det" type="number" value="${S.maxDet}"></div><div><label>متوسط السرعة (كم/س)</label><input id="s_sp" type="number" value="${S.speed}"></div></div>
+        <div class="why" style="margin-top:14px">الخصوصية: لا يُحفظ أي عنوان أو طلب. كل شيء يُمسح عند إغلاق الصفحة. الورقة تُقرأ داخل الجوال نفسه، والصورة لا تُرسل لأي مكان. يُرسل فقط الرمز البريدي والشارع إلى خدمة العناوين الهولندية الرسمية (PDOK) لتحديد الموقع. تُحفظ على هذا الجهاز إعدادات المطعم فقط.</div>
+        <div class="btns"><button class="b bw" id="s_clr">مسح كل الطلبات</button><button class="b bp" id="s_ok">حفظ</button></div>`);
+        $("#s_ok").onclick=async()=>{
+          const na=$("#s_a").value.trim();
+          if(na!==S.addr){$("#s_ok").textContent="…";let r=null;try{r=await pdok(na,"type:adres")}catch(e){}
+                          if(!r){$("#s_ok").textContent="حفظ";$("#s_loc").textContent="لم أجد عنوان المطعم. اكتبه هكذا: Kerkstraat 24A, 4041 XB Kesteren";$("#s_loc").style.color="var(--warn)";return}
+                          S.lat=r.lat;S.lng=r.lng;S.addr=na;const m=na.match(/([1-9]\d{3}) ?([A-Za-z]{2})/);S.pc=m?(m[1]+m[2]).toUpperCase():"";}
+          S.name=$("#s_n").value;S.maxN=Math.max(1,+$("#s_n2").value||4);S.maxAge=Math.max(1,+$("#s_age").value||20);S.maxDet=Math.max(0,+$("#s_det").value||5);S.speed=Math.max(5,+$("#s_sp").value||35);saveS();close()};
+        $("#s_clr").onclick=()=>{groups=[];letterIdx=0;close()};
+      };
+
+      // ----- Demo: 6 sample slips (fake addresses) -----
+      $("#demoBtn").onclick=()=>{
+        const demo=[
+          {street:"Benthuizenstraat",postcode:"4051 GC",city:"Ochten",lat:51.9105,lng:5.5745,time:"19:06",ref:"DEMO1"},
+          {street:"Dorpsstraat",postcode:"4043 KK",city:"Opheusden",lat:51.9315,lng:5.6335,time:"19:10",ref:"DEMO2"},
+          {street:"Fruitstraat",postcode:"4051 CE",city:"Ochten",lat:51.9082,lng:5.5690,time:"19:12",ref:"DEMO3"},
+          {street:"Hoofdstraat",postcode:"4041 AE",city:"Kesteren",lat:51.9372,lng:5.5641,time:"19:15",ref:"DEMO4"},
+          {street:"Waalbandijk",postcode:"4051 LB",city:"Ochten",lat:51.9047,lng:5.5790,time:"19:18",ref:"DEMO5"},
+          {street:"Tielsestraat",postcode:"4043 JR",city:"Opheusden",lat:51.9282,lng:5.6260,time:"19:20",ref:"DEMO6"}];
+        let i=0;
+        open(`<h2>تجربة بست أوراق</h2><p class="hint">أضيف 6 طلبات تجريبية واحداً واحداً، كأن العامل يصوّرها.</p><div class="btns"><button class="b bs" id="dm_no">إلغاء</button><button class="b bp" id="dm_go">الطلب التالي (1/6)</button></div>`);
+        $("#dm_no").onclick=close;
+        const next=()=>{const r=place(Object.assign({src:"demo"},demo[i]));i++;result(r);
+                        if(i<demo.length){$("#ok").textContent=`التالي (${i+1}/6)`;$("#ok").onclick=next}};
+        $("#dm_go").onclick=next;
+      };
+      render();
+      addEventListener("online",render);addEventListener("offline",render);
+      // Prepare the reader in the background so the first photo is fast
+      setTimeout(()=>{ocrWorker().catch(()=>{})},1500);
+      if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
+        </script>
+  </body>
+</html>html>
+
+    </script>
+  </main></span></h1></header>
+  </body>
+  </style></title>
+  </head>
