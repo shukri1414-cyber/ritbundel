@@ -170,10 +170,14 @@ if(!best||d<best.d)best={i,d,lab};
 }return best;
 }
 function ageMin(g){return(Date.now()-g.created)/60000}
+// Direction from the restaurant: only bundle orders that lie the same way
+function bearing(p){const r=Math.PI/180,h=home(),y=Math.sin((p.lng-h.lng)*r)*Math.cos(p.lat*r),x=Math.cos(h.lat*r)*Math.sin(p.lat*r)-Math.sin(h.lat*r)*Math.cos(p.lat*r)*Math.cos((p.lng-h.lng)*r);return(Math.atan2(y,x)/r+360)%360}
+function sameWay(a,b){if(km(a,b)<=1.5||km(home(),a)<=1||km(home(),b)<=1)return true;const d=Math.abs(bearing(a)-bearing(b))%360;return Math.min(d,360-d)<=40}
 function place(o){
 let best=null;
 for(const g of groups){
 if(g.stops.length>=S.maxN||ageMin(g)>=S.maxAge)continue;
+if(!g.stops.every(s=>sameWay(s,o)))continue;
 const b=bestInsert(g.stops,o);
 if(b&&b.d<=S.maxDet&&(!best||b.d<best.b.d))best={g,b};
 }
@@ -218,8 +222,9 @@ const m=s.match(/^(.*?[A-Za-zÀ-ÿ.'-]{3,})\s+(\d{1,5}\s?[A-Za-z]?(?:[- ]\d{1,4}
 if(m){street=m[1];number=m[2];break}
 if(/(straat|weg|laan|plein|dijk|kade|singel|hof|gracht|dreef|pad|steeg|markt|ring|park|veld|erf|baan|wal|dam|haven|tuin|berg|meer|akker|kamp|hoek|zoom|oord|dal|burg|rade|horst)\b/i.test(s)||k===c.i-1){street=s.replace(/[^A-Za-zÀ-ÿ0-9 .'-]/g,"").trim();if(/(straat|weg|laan|plein|dijk|kade|singel|hof|gracht|dreef|pad|steeg|markt|ring)/i.test(s))break}
 }
-let time=null;const ti=L.findIndex(l=>/bevestigde|tijd/i.test(l));
-for(let k=Math.max(0,ti);k<Math.min(L.length,(ti<0?L.length:ti+3));k++){const m=L[k].match(/\b([01]?\d|2[0-3])[:.]([0-5]\d)\b/);if(m&&!/\d{2}-\d{2}-\d{4}/.test(L[k])){time=m[1].padStart(2,"0")+":"+m[2];break}}
+let time=null;const ti=L.findIndex(l=>/bevestigde|tijd/i.test(l));const now=new Date(),nm=now.getHours()*60+now.getMinutes();const tc=[];
+L.forEach((l,k)=>{if(/\d{2}-\d{2}-\d{4}/.test(l))return;const m=l.match(/\b([01]?\d|2[0-3])[:.]([0-5]\d)\b/);if(m){let dm=(+m[1]*60+ +m[2])-nm;if(dm<-720)dm+=1440;tc.push({k,v:m[1].padStart(2,"0")+":"+m[2],dm})}});
+const near=tc.filter(x=>x.dm>=-30&&x.dm<=240);const pick=near.find(x=>ti>=0&&x.k>ti&&x.k<=ti+3)||near[0]||tc.find(x=>ti>=0&&x.k>ti&&x.k<=ti+3);if(pick)time=pick.v;
 const r=L.find(l=>/^[A-Z0-9]{6}$/.test(l)&&/[A-Z]/.test(l)&&/\d/.test(l)&&!/^\d{4}[A-Z]{2}$/.test(l));
 return{street,number,postcode:c.pc.slice(0,4)+" "+c.pc.slice(4),city:c.city||null,time,ref:r||null};
 }
@@ -239,14 +244,23 @@ const r=await fetch(u);if(!r.ok)throw new Error("pdok");const j=await r.json();c
 if(!d||!d.centroide_ll)return null;const m=d.centroide_ll.match(/POINT\(([-\d.]+) ([-\d.]+)\)/);
 return m?{lat:+m[2],lng:+m[1],src:d.type,name:d.weergavenaam}:null;
 }
+function pickNum(s){if(!s)return null;const ts=String(s).split(/\s+/);for(let i=ts.length-1;i>0;i--){if(/^\d{1,5}[A-Za-z]?$/.test(ts[i]))return ts[i]}return null}
+function splitName(n){const m=String(n||"").match(/^(.*?),\s*(?:\d{4}\s?[A-Z]{2}\s+)?(.+)$/);if(!m)return null;const s=m[1].replace(/\s+\d+\S*$/,"");return{street:s,city:m[2]}}
 async function locate(a){
+const r0=await locate0(a);if(!r0)return null;
+const nm=splitName(r0.name),num=a.number||pickNum(a.street);let r=r0;
+if(nm&&nm.street&&num&&r0.src!=="adres"){try{const x=await pdok(`${nm.street} ${num} ${normPC(a.postcode)}`,"type:adres");if(x&&km(x,r0)<1.5)r=x}catch(e){}}
+const fn=splitName(r.name)||nm;if(fn){a.street=fn.street;a.city=fn.city}a.number=(r.src==="adres"&&num)?num:(num||null);
+if(r.src==="adres"&&!num)r.src="weg";return r;
+}
+async function locate0(a){
 const pc=normPC(a.postcode),tries=[];
 if(a.street&&a.number&&pc)tries.push([`${a.street} ${a.number} ${pc}`,"type:adres"]);
 if(a.street&&pc)tries.push([`${a.street} ${pc}`,"type:(adres OR weg)"]);
 if(pc)tries.push([pc,"type:postcode"]);
 if(pc.length>=4)tries.push([pc.slice(0,4),"type:postcode"]);
 if(a.street&&a.city)tries.push([`${a.street} ${a.number||""} ${a.city}`,"type:(adres OR weg)"]);
-for(const[q,fq]of tries){try{const r=await pdok(q,fq);if(r&&km(r,home())<60){if(r.src==="adres"&&!a.number)r.src="weg";return r}}catch(e){if(!navigator.onLine)throw e}}
+for(const[q,fq]of tries){try{const r=await pdok(q,fq);if(r&&km(r,home())<60)return r}catch(e){if(!navigator.onLine)throw e}}
 return null;
 }
 function precText(s){return s==="adres"?t("precExact"):s==="weg"?t("precStreet"):t("precArea")}
