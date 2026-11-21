@@ -1,5 +1,5 @@
 // RitBundel service worker: caches the app and its libraries, never customer data.
-const V = "rb-v2";
+const V = "rb-v3";
 const SHELL = ["./", "./index.html", "./manifest.webmanifest", "./icon.svg"];
 const LIB_HOSTS = ["cdn.jsdelivr.net", "cdnjs.cloudflare.com", "fonts.googleapis.com", "fonts.gstatic.com"];
 
